@@ -1,0 +1,2007 @@
+{
+  "name": "Physics",
+  "realms": ["client", "server"],
+  "description": "API for physics-related functions.",
+  "functions": [
+    {
+      "name": "connectDebugger",
+      "section": "Debugging",
+      "description": ["Connects the PhysX Visual Debugger.", "This function is only available on debug builds."],
+      "parameters": [
+        {
+          "name": "host",
+          "description": "The host to connect to.",
+          "type": "string"
+        },
+        {
+          "name": "port",
+          "description": "The port to connect to.",
+          "type": "number"
+        },
+        {
+          "name": "timeout",
+          "description": "The timeout in milliseconds.",
+          "type": "number"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "disconnectDebugger",
+      "section": "Debugging",
+      "description": ["Disconnects the PhysX Visual Debugger.", "This function is only available on debug builds."],
+      "parameters": [],
+      "returns": []
+    },
+    {
+      "name": "isDebuggerConnected",
+      "section": "Debugging",
+      "description": [
+        "Checks if the PhysX Visual Debugger is connected.",
+        "This function is only available on debug builds."
+      ],
+      "parameters": [],
+      "returns": [
+        {
+          "name": "connected",
+          "description": "Whether the debugger is connected.",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "makeRigidStatic",
+      "section": "Rigid-Bodies",
+      "description": "Adds a static rigid-body to an entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to make a static rigid-body.",
+          "type": "entity"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "makeRigidDynamic",
+      "section": "Rigid-Bodies",
+      "description": "Adds a dynamic rigid-body to an entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to make a dynamic rigid-body.",
+          "type": "entity"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "makeArticulationRoot",
+      "section": "Articulations",
+      "description": [
+        "Adds a an articulation to an entity and makes it the root link.",
+        "You can read more about articulations here: https://nvidia-omniverse.github.io/PhysX/physx/5.6.1/docs/Articulations.html.",
+        "",
+        "Note that regardless of the `disableSelfCollision` setting (which affects _all_ collision within the articulation),",
+        "the parent and child of an articulation link will never collide with each other."
+      ],
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to make an articulation.",
+          "type": "entity"
+        },
+        {
+          "name": "options",
+          "description": "Optional configuration for the articulation. Set the whole table or individual properties to `nil` to use defaults.",
+          "type": "table",
+          "optional": true,
+          "defaultValue": "{ fixedBase = false, disableSelfCollision = false }"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "makeArticulationLink",
+      "section": "Articulations",
+      "description": "Adds an articulation link rigid-body to an entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to make an articulation link.",
+          "type": "entity"
+        },
+        {
+          "name": "parent",
+          "description": "The parent entity. Must have an articulation link already.",
+          "type": "entity"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "removePhysics",
+      "description": "Removes the static or dynamic rigid-body attached to an entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to remove physics from.",
+          "type": "entity"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "isRigidStatic",
+      "section": "Rigid-Bodies",
+      "description": "Checks whether the entity is a static rigid-body.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to check.",
+          "type": "entity"
+        }
+      ],
+      "returns": [
+        {
+          "name": "isRigidStatic",
+          "description": "Whether the entity is a static rigid-body.",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "isRigidDynamic",
+      "section": "Rigid-Bodies",
+      "description": "Checks whether the entity is a dynamic rigid-body. This includes articulation links.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to check.",
+          "type": "entity"
+        }
+      ],
+      "returns": [
+        {
+          "name": "isRigidDynamic",
+          "description": "Whether the entity is a dynamic rigid-body.",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "isArticulationRoot",
+      "section": "Articulations",
+      "description": "Checks whether the entity is the root of an articulation.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to check.",
+          "type": "entity"
+        }
+      ],
+      "returns": [
+        {
+          "name": "isArticulationRoot",
+          "description": "Whether the entity is an articulation root.",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "isArticulationLink",
+      "section": "Articulations",
+      "description": "Checks whether the entity is a link of an articulation.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to check.",
+          "type": "entity"
+        }
+      ],
+      "returns": [
+        {
+          "name": "isArticulationLink",
+          "description": "Whether the entity is an articulation link.",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "addToScene",
+      "section": "Scene",
+      "description": [
+        "Adds the entity's rigid-body to the physics scene, making it active in collision detection and scene queries.",
+        "Note that articulations cannot be modified after being added to the scene."
+      ],
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "Entity to add.",
+          "type": "entity"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "removeFromScene",
+      "section": "Scene",
+      "description": "Removes the entity's rigid-body from the physics scene, making it inactive in collision detection and scene queries.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "Entity to remove.",
+          "type": "entity"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "isInScene",
+      "section": "Scene",
+      "description": "Checks whether the entity's rigid-body has been added to the physics scene.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "Entity to check.",
+          "type": "entity"
+        }
+      ],
+      "returns": [
+        {
+          "name": "isInScene",
+          "description": "Whether the entity is in the scene.",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "wake",
+      "section": "Sleep & Wake",
+      "description": [
+        "Forces the entity's rigid-body to wake up.",
+        "The physics engine will pause the simulation of rigid-bodies which have not significantly changed their state for a period of time,",
+        "and will wake them automatically if another object interacts with them."
+      ],
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "Entity to wake.",
+          "type": "entity"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "sleep",
+      "section": "Sleep & Wake",
+      "description": "Forces the entity's rigid-body to sleep, pausing its simulation until awoken manually or by another object.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "Entity to sleep.",
+          "type": "entity"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "isSleeping",
+      "section": "Sleep & Wake",
+      "description": "Checks whether the entity's rigid-body has its simulation paused.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "Entity to check.",
+          "type": "entity"
+        }
+      ],
+      "returns": [
+        {
+          "name": "isSleeping",
+          "description": "Whether the entity is sleeping.",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "getMass",
+      "section": "Mass & Inertia",
+      "description": "Gets the mass of a rigid-body entity or collider.",
+      "parameters": [
+        {
+          "name": "entityOrCollider",
+          "description": "The entity or collider to get the mass of.",
+          "type": ["entity", "Collider"]
+        }
+      ],
+      "returns": [
+        {
+          "name": "mass",
+          "description": "The mass of the object.",
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "name": "setMass",
+      "section": "Mass & Inertia",
+      "description": [
+        "Sets the mass of a rigid-body entity or collider.",
+        "",
+        "You should update the inertia tensor when modifying the mass of a rigid-body.",
+        "You can either calculate this by hand, or use the helper methods `setMassAndUpdateInertia` and `updateMassAndInertiaFromColliders`."
+      ],
+      "parameters": [
+        {
+          "name": "entityOrCollider",
+          "description": "The entity or collider to set the mass of.",
+          "type": ["entity", "Collider"]
+        },
+        {
+          "name": "mass",
+          "description": "The mass to set.",
+          "type": "number"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "getCentreOfMass",
+      "section": "Mass & Inertia",
+      "description": "Gets the centre of mass of a rigid-body entity or collider, in local space.",
+      "parameters": [
+        {
+          "name": "entityOrCollider",
+          "description": "The entity or collider to get the centre of mass of.",
+          "type": ["entity", "Collider"]
+        }
+      ],
+      "returns": [
+        {
+          "name": "centreOfMass",
+          "description": "The centre of mass of the object.",
+          "type": "vector"
+        }
+      ]
+    },
+    {
+      "name": "setCentreOfMass",
+      "section": "Mass & Inertia",
+      "description": [
+        "Sets the mass of a rigid-body entity or collider.",
+        "",
+        "You should update the inertia tensor when modifying the centre of mass of a rigid-body.",
+        "You can either calculate this by hand, or use the helper methods `setMassAndUpdateInertia` and `updateMassAndInertiaFromColliders`."
+      ],
+      "parameters": [
+        {
+          "name": "entityOrCollider",
+          "description": "The entity or collider to set the centre of mass of.",
+          "type": ["entity", "Collider"]
+        },
+        {
+          "name": "centreOfMass",
+          "description": "The centre of mass to set.",
+          "type": "vector"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "getInertiaDiagonal",
+      "section": "Mass & Inertia",
+      "description": "Gets the diagonal inertia tensor of an entity's rigid-body",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "Entity to get the inertia diagonal of.",
+          "type": "entity"
+        }
+      ],
+      "returns": [
+        {
+          "name": "inertiaDiagonal",
+          "description": "The diagonal inertia tensor.",
+          "type": "vector"
+        }
+      ]
+    },
+    {
+      "name": "setInertiaDiagonal",
+      "section": "Mass & Inertia",
+      "description": [
+        "Sets the diagonal inertia tensor of an entity's rigid-body.",
+        "In most cases you should use the `setMassAndUpdateInertia` and `updateMassAndInertiaFromColliders` methods instead."
+      ],
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "Entity to set the inertia diagonal of.",
+          "type": "entity"
+        },
+        {
+          "name": "inertiaDiagonal",
+          "description": "The diagonal inertia tensor.",
+          "type": "vector"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "getInertiaOrientation",
+      "section": "Mass & Inertia",
+      "description": "Gets the orientation in which the diagonal inertia tensor of an entity's rigid-body applies.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "Entity to get the inertia orientation of.",
+          "type": "entity"
+        }
+      ],
+      "returns": [
+        {
+          "name": "inertiaOrientation",
+          "description": "The orientation of the inertia tensor.",
+          "type": "Quaternion"
+        }
+      ]
+    },
+    {
+      "name": "setInertiaOrientation",
+      "section": "Mass & Inertia",
+      "description": [
+        "Sets the orientation in which the diagonal inertia tensor of an entity's rigid-body applies.",
+        "In most cases you should use the `setMassAndUpdateInertia` and `updateMassAndInertiaFromColliders` methods instead."
+      ],
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "Entity to set the inertia orientation of.",
+          "type": "entity"
+        },
+        {
+          "name": "inertiaOrientation",
+          "description": "The orientation of the inertia tensor.",
+          "type": "Quaternion"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "setMassAndUpdateInertia",
+      "section": "Mass & Inertia",
+      "description": [
+        "Sets the mass properties of an entity's rigid-body and updates the inertia tensor to match.",
+        "",
+        "This method assumes a uniform density of `1` for all attached colliders.",
+        "For rigid-bodies of mixed density, use `updateMassAndInertiaFromColliders` or calculate the inertia tensor by hand."
+      ],
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "Entity to set the mass properties of.",
+          "type": "entity"
+        },
+        {
+          "name": "mass",
+          "description": "Total mass of the rigid-body across all colliders.",
+          "type": "number"
+        },
+        {
+          "name": "centreOfMass",
+          "description": "Overall centre of mass of the rigid-body, in local space.",
+          "type": "vector"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "updateMassAndInertiaFromColliders",
+      "section": "Mass & Inertia",
+      "description": "Updates the mass and inertia of an entity's rigid-body to match its attached colliders.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "Entity to update the mass and inertia of.",
+          "type": "entity"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "getLinearDamping",
+      "section": "Damping",
+      "description": "Gets the linear damping of a rigid body.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity with the rigid body.",
+          "type": "entity"
+        }
+      ],
+      "returns": [
+        {
+          "name": "damping",
+          "description": "The linear damping of the rigid body.",
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "name": "setLinearDamping",
+      "section": "Damping",
+      "description": "Sets the linear damping of a rigid body.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity with the rigid body.",
+          "type": "entity"
+        },
+        {
+          "name": "damping",
+          "description": "The linear damping to set.",
+          "type": "number"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "getAngularDamping",
+      "section": "Damping",
+      "description": "Gets the angular damping of a rigid body.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity with the rigid body.",
+          "type": "entity"
+        }
+      ],
+      "returns": [
+        {
+          "name": "damping",
+          "description": "The angular damping of the rigid body.",
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "name": "setAngularDamping",
+      "section": "Damping",
+      "description": "Sets the angular damping of a rigid body.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity with the rigid body.",
+          "type": "entity"
+        },
+        {
+          "name": "damping",
+          "description": "The angular damping to set.",
+          "type": "number"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "setLinearVelocity",
+      "section": "Velocity & Acceleration",
+      "description": [
+        "Sets the linear velocity of an entity.",
+        "The entity must have a rigid body for velocity to be applied each tick automatically."
+      ],
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to set the velocity of.",
+          "type": "entity"
+        },
+        {
+          "name": "velocity",
+          "description": "The linear velocity to set.",
+          "type": "vector"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "getLinearVelocity",
+      "section": "Velocity & Acceleration",
+      "description": "Gets the linear velocity of an entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to get the velocity of.",
+          "type": "entity"
+        }
+      ],
+      "returns": [
+        {
+          "name": "velocity",
+          "description": "The linear velocity of the entity.",
+          "type": "vector"
+        }
+      ]
+    },
+    {
+      "name": "setAngularVelocity",
+      "section": "Velocity & Acceleration",
+      "description": [
+        "Sets the angular velocity of an entity.",
+        "The entity must have a rigid body for velocity to be applied each tick automatically."
+      ],
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to set the velocity of.",
+          "type": "entity"
+        },
+        {
+          "name": "velocity",
+          "description": "The angular velocity to set.",
+          "type": "vector"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "getAngularVelocity",
+      "section": "Velocity & Acceleration",
+      "description": "Gets the angular velocity of an entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to get the velocity of.",
+          "type": "entity"
+        }
+      ],
+      "returns": [
+        {
+          "name": "velocity",
+          "description": "The angular velocity of the entity.",
+          "type": "vector"
+        }
+      ]
+    },
+    {
+      "name": "getVelocityAtPosition",
+      "section": "Velocity & Acceleration",
+      "description": [
+        "Gets the velocity of a point in world space if it were attached to the rigid body,",
+        "taking into account both the linear and angular velocity."
+      ],
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity with the rigid body.",
+          "type": "entity"
+        },
+        {
+          "name": "position",
+          "description": "World space position to read the velocity of.",
+          "type": "vector"
+        }
+      ],
+      "returns": [
+        {
+          "name": "velocity",
+          "description": "The velocity of the world space position.",
+          "type": "vector"
+        }
+      ]
+    },
+    {
+      "name": "getLinearAcceleration",
+      "section": "Velocity & Acceleration",
+      "description": "Gets the linear acceleration of a rigid body.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity with the rigid body.",
+          "type": "entity"
+        }
+      ],
+      "returns": [
+        {
+          "name": "acceleration",
+          "description": "The linear acceleration of the rigid body.",
+          "type": "vector"
+        }
+      ]
+    },
+    {
+      "name": "getAngularAcceleration",
+      "section": "Velocity & Acceleration",
+      "description": "Gets the angular acceleration of a rigid body.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity with the rigid body.",
+          "type": "entity"
+        }
+      ],
+      "returns": [
+        {
+          "name": "acceleration",
+          "description": "The angular acceleration of the rigid body.",
+          "type": "vector"
+        }
+      ]
+    },
+    {
+      "name": "addForce",
+      "section": "Force & Torque",
+      "description": [
+        "Adds a force to a rigid body.",
+        "",
+        "#### Force accumulation",
+        "Forces are accumulated until the next physics step.",
+        "To clear the accumulated forces, call [clearForce](#Physics.clearForce)."
+      ],
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity with the rigid body.",
+          "type": "entity"
+        },
+        {
+          "name": "force",
+          "description": "The force to add.",
+          "type": "vector"
+        },
+        {
+          "name": "mode",
+          "description": "The force mode.",
+          "type": "ForceMode",
+          "optional": true,
+          "defaultValue": "ForceMode.Force"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "addTorque",
+      "section": "Force & Torque",
+      "description": [
+        "Adds a torque to a rigid body.",
+        "",
+        "#### Torque accumulation",
+        "Torques are accumulated until the next physics step.",
+        "To clear the accumulated torques, call [clearTorque](#Physics.clearTorque)."
+      ],
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity with the rigid body.",
+          "type": "entity"
+        },
+        {
+          "name": "torque",
+          "description": "The torque to add.",
+          "type": "vector"
+        },
+        {
+          "name": "mode",
+          "description": "The force mode.",
+          "type": "ForceMode",
+          "optional": true,
+          "defaultValue": "ForceMode.Force"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "addForceAtPosition",
+      "section": "Force & Torque",
+      "description": [
+        "Adds a force to a rigid-body at the given position in world space, affecting both its linear and angular velocity.",
+        "",
+        "#### Force accumulation",
+        "Forces are accumulated until the next physics step.",
+        "To clear the accumulated forces, call [clearForce](#Physics.clearForce)."
+      ],
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "Entity to add the force to.",
+          "type": "entity"
+        },
+        {
+          "name": "force",
+          "description": "Force to add.",
+          "type": "number"
+        },
+        {
+          "name": "globalPosition",
+          "description": "Global position to add the force to.",
+          "type": "vector"
+        },
+        {
+          "name": "mode",
+          "description": "The force mode.",
+          "type": "ForceMode",
+          "optional": true,
+          "defaultValue": "ForceMode.Force"
+        }
+      ]
+    },
+    {
+      "name": "clearForce",
+      "section": "Force & Torque",
+      "description": "Clears the currently accumulated forces of a rigid body.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity with the rigid body.",
+          "type": "entity"
+        },
+        {
+          "name": "mode",
+          "description": "The force mode of the forces to clear.",
+          "type": "ForceMode",
+          "optional": true,
+          "defaultValue": "ForceMode.Force"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "clearTorque",
+      "section": "Force & Torque",
+      "description": "Clears the currently accumulated torques of a rigid body.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity with the rigid body.",
+          "type": "entity"
+        },
+        {
+          "name": "mode",
+          "description": "The force mode of the torques to clear.",
+          "type": "ForceMode",
+          "optional": true,
+          "defaultValue": "ForceMode.Force"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "getArticulationRoot",
+      "section": "Articulations",
+      "description": [
+        "Returns the root of the articulation which this entity is a part of.",
+        "Throws if the entity is not part of an articulation."
+      ],
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "Entity to get the articulation root of.",
+          "type": "entity"
+        }
+      ],
+      "returns": [
+        {
+          "name": "articulationRoot",
+          "description": "The entity at the root of the articulation.",
+          "type": "entity"
+        }
+      ]
+    },
+    {
+      "name": "getArticulationParent",
+      "section": "Articulations",
+      "description": [
+        "Returns the parent of an entity's articulation link.",
+        "Throws if the entity is not part of an articulation."
+      ],
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "Entity to get the parent link of.",
+          "type": "entity"
+        }
+      ],
+      "returns": [
+        {
+          "name": "parent",
+          "description": "Parent articulation link, or `nil` if this entity was the root link.",
+          "type": "entity",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "getArticulationChildren",
+      "section": "Articulations",
+      "description": [
+        "Returns the child links of an entity's articulation link.",
+        "Throws if the entity is not part of an articulation."
+      ],
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "Entity to get the child links of.",
+          "type": "entity"
+        }
+      ],
+      "returns": [
+        {
+          "name": "children",
+          "description": "Child articulation links.",
+          "type": {
+            "type": "array",
+            "items": "entity"
+          }
+        }
+      ]
+    },
+    {
+      "name": "setJointParentFrame",
+      "section": "Joints",
+      "description": "Sets the position and orientation of the joint in the parent's local space.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "Entity with the joint.",
+          "type": "entity"
+        },
+        {
+          "name": "position",
+          "description": "Position relative to the parent.",
+          "type": "vector"
+        },
+        {
+          "name": "orientation",
+          "description": "Orientation relative to the parent.",
+          "type": "Quaternion"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "setJointChildFrame",
+      "section": "Joints",
+      "description": "Sets the position and orientation of the joint in the child's local space.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "Entity with the joint.",
+          "type": "entity"
+        },
+        {
+          "name": "position",
+          "description": "Position relative to the child.",
+          "type": "vector"
+        },
+        {
+          "name": "orientation",
+          "description": "Orientation relative to the child.",
+          "type": "Quaternion"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "setJointType",
+      "section": "Joints",
+      "description": "Sets the type of the joint, governing its degrees of freedom.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "Entity with the joint.",
+          "type": "entity"
+        },
+        {
+          "name": "type",
+          "description": "Type to set.",
+          "type": "JointType"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "setJointMotion",
+      "section": "Joints",
+      "description": "Sets the motion of the joint along or about the degree of freedom.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "Entity with the joint.",
+          "type": "entity"
+        },
+        {
+          "name": "degreeOfFreedom",
+          "description": "Linear or angular degree of freedom to modify.",
+          "type": "DegreeOfFreedom"
+        },
+        {
+          "name": "motion",
+          "description": "Type of motion.",
+          "type": "JointMotion"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "setJointLimits",
+      "section": "Joints",
+      "description": [
+        "Sets the limits of the joint's motion along or about the degree of freedom.",
+        "Does nothing unless the joint motion is set to `Limited`."
+      ],
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "Entity with the joint.",
+          "type": "entity"
+        },
+        {
+          "name": "degreeOfFreedom",
+          "description": "Linear or angular degree of freedom to modify.",
+          "type": "DegreeOfFreedom"
+        },
+        {
+          "name": "min",
+          "description": "Minimum translation along or rotation about the degree of freedom.",
+          "type": "number"
+        },
+        {
+          "name": "max",
+          "description": "Maximum translation along or rotation about the degree of freedom.",
+          "type": "number"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "createCollider",
+      "section": "Colliders",
+      "description": "Creates a new collider with geometry and mass properties.",
+      "parameters": [
+        {
+          "name": "geometry",
+          "description": "Geometry to use.",
+          "type": "PhysicsGeometry"
+        }
+      ],
+      "returns": [
+        {
+          "name": "collider",
+          "description": "The created collider.",
+          "type": "Collider"
+        }
+      ]
+    },
+    {
+      "name": "attachCollider",
+      "section": "Colliders",
+      "description": [
+        "Attaches the collider to an entity's rigid-body.",
+        "Colliders may only be attached to one rigid-body at a time."
+      ],
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "Entity to attach to.",
+          "type": "entity"
+        },
+        {
+          "name": "collider",
+          "description": "Collider to attach.",
+          "type": "Collider"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "detachCollider",
+      "section": "Colliders",
+      "description": [
+        "Detaches the collider from its rigid-body.",
+        "Throws if not attached to a rigid-body (check with `getColliderEntity`)."
+      ],
+      "parameters": [
+        {
+          "name": "collider",
+          "description": "Collider to detach.",
+          "type": "Collider"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "getColliders",
+      "section": "Colliders",
+      "description": "Gets all colliders attached to the entity's rigid-body.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "Entity to get the colliders of.",
+          "type": "entity"
+        }
+      ],
+      "returns": [
+        {
+          "name": "colliders",
+          "description": "List of attached colliders.",
+          "type": {
+            "type": "array",
+            "items": "Collider"
+          }
+        }
+      ]
+    },
+    {
+      "name": "getColliderEntity",
+      "section": "Colliders",
+      "description": "Gets the entity this collider is attached to.",
+      "parameters": [
+        {
+          "name": "collider",
+          "description": "Collider to get the entity of.",
+          "type": "Collider"
+        }
+      ],
+      "returns": [
+        {
+          "name": "entity",
+          "description": "Entity this collider is attached to, or `nil` if not attached.",
+          "type": "entity",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "createController",
+      "section": "Character Controllers",
+      "description": [
+        "Creates a new PhysX character controller with the given options.",
+        "This is a very low level API which requires you to determine the displacement for the controller each frame",
+        "(including applying gravity and tracking whether the controller is grounded).",
+        "",
+        "In most cases you'll want to use one of the provided character controllers in the `/character-controllers` folder.",
+        "If you do need to implement your own character controller from scratch,",
+        "you should read through https://nvidia-omniverse.github.io/PhysX/physx/5.4.2/docs/CharacterControllers.html first."
+      ],
+      "parameters": [
+        {
+          "name": "options",
+          "type": "ControllerCreateOptions"
+        }
+      ],
+      "returns": [
+        {
+          "name": "controller",
+          "description": "Box or capsule controller depending on `options.shape`.",
+          "type": ["BoxController", "CapsuleController"]
+        }
+      ]
+    },
+    {
+      "name": "moveController",
+      "section": "Character Controllers",
+      "description": [
+        "Apply a displacement vector to the given character controller, performing collision checks on surrounding geometry.",
+        "",
+        "The displacement should be premultiplied by the time between this and the previous `moveController` call if the rate of movement should be framerate independent."
+      ],
+      "parameters": [
+        {
+          "name": "controller",
+          "type": ["BoxController", "CapsuleController"]
+        },
+        {
+          "name": "displacement",
+          "description": "Displacement relative to the controller's centre",
+          "type": "vector"
+        },
+        {
+          "name": "minDistance",
+          "description": "Minimum distance below which the displacement (after applying collision) will be considered as no movement.",
+          "type": "number"
+        },
+        {
+          "name": "deltaTime",
+          "description": "Time (in seconds) between this and the previous `moveController` call.",
+          "type": "number"
+        }
+      ],
+      "returns": [
+        {
+          "name": "result",
+          "type": "ControllerMoveResult"
+        }
+      ]
+    },
+    {
+      "name": "setControllerHeight",
+      "section": "Character Controllers",
+      "description": "Sets the controller's height, not including the contact offset (aka skin) or the radius (for capsule controllers).",
+      "parameters": [
+        {
+          "name": "controller",
+          "type": ["BoxController", "CapsuleController"]
+        },
+        {
+          "name": "height",
+          "type": "number"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "setControllerSideExtent",
+      "section": "Character Controllers",
+      "description": "Sets the size of the box controller's collider on the left/right axis.",
+      "parameters": [
+        {
+          "name": "controller",
+          "type": "BoxController"
+        },
+        {
+          "name": "sideExtent",
+          "type": "number"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "setControllerForwardExtent",
+      "section": "Character Controllers",
+      "description": "Sets the size of the box controller's collider on the forward/backward axis.",
+      "parameters": [
+        {
+          "name": "controller",
+          "type": "BoxController"
+        },
+        {
+          "name": "forwardExtent",
+          "type": "number"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "setControllerRadius",
+      "section": "Character Controllers",
+      "description": "Sets the cylinder and end cap radius of the capsule controller's collider",
+      "parameters": [
+        {
+          "name": "controller",
+          "type": "CapsuleController"
+        },
+        {
+          "name": "radius",
+          "type": "number"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "setControllerPosition",
+      "section": "Character Controllers",
+      "description": [
+        "Sets the controller's position without performing any collision or overlap tests.",
+        "You should ensure that the position has sufficient space for the controller's collider."
+      ],
+      "parameters": [
+        {
+          "name": "controller",
+          "type": ["BoxController", "CapsuleController"]
+        },
+        {
+          "name": "position",
+          "type": "vector"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "setControllerFootPosition",
+      "section": "Character Controllers",
+      "description": [
+        "Sets the controller's position without performing any collision or overlap tests.",
+        "You should ensure that the position has sufficient space for the controller's collider.",
+        "",
+        "Similar to `Physics.setControllerPosition`, except the vector positions the bottom extent of the collider (including contact offset)",
+        "as opposed to the centre."
+      ],
+      "parameters": [
+        {
+          "name": "controller",
+          "type": ["BoxController", "CapsuleController"]
+        },
+        {
+          "name": "position",
+          "type": "vector"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "setControllerUpDirection",
+      "section": "Character Controllers",
+      "description": [
+        "Sets the up direction of the controller, adjusting the collider rotation and auto-stepping.",
+        "",
+        "TODO: Check if this transforms the displacement vector passed to `Physics.moveController` and document either way."
+      ],
+      "parameters": [
+        {
+          "name": "controller",
+          "type": ["BoxController", "CapsuleController"]
+        },
+        {
+          "name": "upDirection",
+          "type": "vector"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "setControllerStepOffset",
+      "section": "Character Controllers",
+      "description": ["Sets the step offset of the controller."],
+      "parameters": [
+        {
+          "name": "controller",
+          "type": ["BoxController", "CapsuleController"]
+        },
+        {
+          "name": "stepOffset",
+          "type": "number"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "getControllerPosition",
+      "section": "Character Controllers",
+      "description": "Gets the position of the controller's centre.",
+      "parameters": [
+        {
+          "name": "controller",
+          "type": ["BoxController", "CapsuleController"]
+        }
+      ],
+      "returns": [
+        {
+          "name": "position",
+          "type": "vector"
+        }
+      ]
+    },
+    {
+      "name": "getControllerFootPosition",
+      "section": "Character Controllers",
+      "description": "Gets the position of the bottom extent of the controller's collider (including contact offset).",
+      "parameters": [
+        {
+          "name": "controller",
+          "type": ["BoxController", "CapsuleController"]
+        }
+      ],
+      "returns": [
+        {
+          "name": "footPosition",
+          "type": "vector"
+        }
+      ]
+    },
+    {
+      "name": "getControllerUpDirection",
+      "section": "Character Controllers",
+      "description": "Gets the up direction of the controller.",
+      "parameters": [
+        {
+          "name": "controller",
+          "type": ["BoxController", "CapsuleController"]
+        }
+      ],
+      "returns": [
+        {
+          "name": "upDirection",
+          "type": "vector"
+        }
+      ]
+    },
+    {
+      "name": "getControllerStepOffset",
+      "section": "Character Controllers",
+      "description": "Gets the step offset of the controller.",
+      "parameters": [
+        {
+          "name": "controller",
+          "type": ["BoxController", "CapsuleController"]
+        }
+      ],
+      "returns": [
+        {
+          "name": "stepOffset",
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "name": "createSphere",
+      "section": "Geometry",
+      "description": "Creates a sphere geometry with the given radius.",
+      "parameters": [
+        {
+          "name": "radius",
+          "type": "number"
+        }
+      ],
+      "returns": [
+        {
+          "name": "sphere",
+          "type": "PhysicsGeometry"
+        }
+      ]
+    },
+    {
+      "name": "createCapsule",
+      "section": "Geometry",
+      "description": [
+        "Creates a capsule geometry with the given radius and half height.",
+        "The total height can be calculated as `2 * (radius + halfHeight)`.",
+        "",
+        "The capsule is oriented along the X-axis in the geometry's local coordinate space.",
+        "To orient it vertically when creating a shape, set the shape's local orientation to a 90 degree rotation about the Z-axis."
+      ],
+      "parameters": [
+        {
+          "name": "radius",
+          "type": "number"
+        },
+        {
+          "name": "halfHeight",
+          "description": "Distance from the origin to the centre of the end caps.",
+          "type": "number"
+        }
+      ],
+      "returns": [
+        {
+          "name": "capsule",
+          "type": "PhysicsGeometry"
+        }
+      ]
+    },
+    {
+      "name": "createBox",
+      "section": "Geometry",
+      "description": "Creates a box geometry with the given half extents along the geometry's local axes.",
+      "parameters": [
+        {
+          "name": "halfExtents",
+          "description": "Distance from the origin to the sides of the box on each axis.",
+          "type": "vector"
+        }
+      ],
+      "returns": [
+        {
+          "name": "box",
+          "type": "PhysicsGeometry"
+        }
+      ]
+    },
+    {
+      "name": "createPlane",
+      "section": "Geometry",
+      "description": [
+        "Creates a plane geometry at the origin of the geometry's local coordinate space.",
+        "",
+        "Everything below the plane (-X in the local coordinate space) is considered as colliding with it."
+      ],
+      "parameters": [],
+      "returns": [
+        {
+          "name": "plane",
+          "type": "PhysicsGeometry"
+        }
+      ]
+    },
+    {
+      "name": "raycast",
+      "section": "Scene Queries",
+      "description": "Traces a ray along a given direction up to an (optional) max distance.",
+      "parameters": [
+        {
+          "name": "origin",
+          "description": "Starting point of the ray.",
+          "type": "vector"
+        },
+        {
+          "name": "direction",
+          "description": "Direction along which to trace the ray.",
+          "type": "vector"
+        },
+        {
+          "name": "maxDistance",
+          "description": "Optional maximum distance to trace before returning a miss.",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "options",
+          "description": "See documentation for `RaycastOptions`. Pass `nil` to use all defaults.",
+          "type": "RaycastOptions",
+          "optional": true
+        }
+      ],
+      "returns": [
+        {
+          "name": "result",
+          "description": "See documentation for `RaycastResult`.",
+          "type": "RaycastResult"
+        }
+      ]
+    },
+    {
+      "name": "sweep",
+      "section": "Scene Queries",
+      "description": [
+        "Sweeps a geometry along a given direction up to an (optional) max distance.",
+        "",
+        "An optional 'skin' or contact offset can be defined around the geometry to avoid issues resulting from floating point imprecision.",
+        "Contacts will be generated if any part of the geometry _or_ skin hit another object."
+      ],
+      "parameters": [
+        {
+          "name": "geometry",
+          "description": "Geometry to sweep.",
+          "type": "PhysicsGeometry"
+        },
+        {
+          "name": "origin",
+          "description": "Starting point of the geometry.",
+          "type": "vector"
+        },
+        {
+          "name": "orientation",
+          "description": "Orientation of the geometry in world space.",
+          "type": "Quaternion"
+        },
+        {
+          "name": "direction",
+          "description": "Direction along which to sweep the geometry.",
+          "type": "vector"
+        },
+        {
+          "name": "maxDistance",
+          "description": "Optional maximum distance to sweep before returning a miss.",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "skin",
+          "description": "Optional 'skin' around the geometry to start generating intersections in.",
+          "type": "number",
+          "optional": true,
+          "defaultValue": "0"
+        },
+        {
+          "name": "options",
+          "description": "See documentation for `RaycastOptions`. Pass `nil` to use all defaults.",
+          "type": "RaycastOptions",
+          "optional": true
+        }
+      ],
+      "returns": [
+        {
+          "name": "result",
+          "description": "See documentation for `RaycastResult`.",
+          "type": "RaycastResult"
+        }
+      ]
+    },
+    {
+      "name": "overlap",
+      "section": "Scene Queries",
+      "description": "Finds all objects overlapping a geometry.",
+      "parameters": [
+        {
+          "name": "geometry",
+          "description": "Geometry to test with.",
+          "type": "PhysicsGeometry"
+        },
+        {
+          "name": "origin",
+          "description": "Position of the geometry.",
+          "type": "vector"
+        },
+        {
+          "name": "orientation",
+          "description": "Orientation of the geometry.",
+          "type": "Quaternion"
+        },
+        {
+          "name": "options",
+          "description": "See documentation for `OverlapOptions`. Pass `nil` to use all defaults.",
+          "type": "OverlapOptions",
+          "optional": true
+        }
+      ],
+      "returns": [
+        {
+          "name": "entities",
+          "description": "Entities overlapping the geometry.",
+          "type": {
+            "type": "array",
+            "items": "entity"
+          }
+        }
+      ]
+    }
+  ],
+  "constants": [
+    {
+      "name": "IS_DEBUGGER_AVAILABLE",
+      "description": "Whether the physics debugger is available. True on debug builds, false otherwise.",
+      "type": "boolean"
+    }
+  ],
+  "classes": [
+    {
+      "name": "ControllerCreateOptions",
+      "descriptions": [
+        "Options passed to `Physics.createController`.",
+        "",
+        "Most properties have sensible defaults which will be used when no value is given."
+      ],
+      "properties": [
+        {
+          "name": "shape",
+          "description": "Which collider to use.",
+          "type": "Physics.ControllerShape"
+        },
+        {
+          "name": "height",
+          "description": "Height of the collider. For capsules this excludes the radius of the end caps.",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "radius",
+          "description": "Radius of the collider. Ignored when `shape` is `Box`.",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "climbingMode",
+          "description": "How the capsule interacts with obstacles taller than `stepOffset`.",
+          "type": "Physics.ClimbingMode",
+          "optional": true
+        },
+        {
+          "name": "sideExtent",
+          "description": "Size of the collider on the left/right axis. Ignored when `shape` is `Capsule`.",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "forwardExtent",
+          "description": "Size of the collider on the forward/backward axis. Ignored when `shape` is `Capsule`.",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "position",
+          "description": "Initial position of the controller's centre.",
+          "type": "vector",
+          "optional": true
+        },
+        {
+          "name": "upDirection",
+          "description": "Up direction of the collider.",
+          "type": "vector",
+          "optional": true
+        },
+        {
+          "name": "slopeLimit",
+          "description": "Maximum slope angle before the controller is unable to move up it (as the cosine of the angle).",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "nonWalkableMode",
+          "description": "How the controller reacts to non-walkable surfaces (defined by `slopeLimit`).",
+          "type": "Physics.NonWalkableMode",
+          "optional": true
+        },
+        {
+          "name": "invisibleWallHeight",
+          "description": "Set greater than `0` to automatically generate wall colliders around non-walkable surfaces.",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "maxJumpHeight",
+          "description": "If `invisibleWallHeight` is greater than `0`, extends the detection range for nearby surfaces.",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "contactOffset",
+          "description": "Size of the skin around the collider used to handle precision issues when detecting collisions.",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "stepOffset",
+          "description": "Maximum height of an obstacle that can be walked over. Capsule controllers can still slide over obstacles taller than this, unless `nonWalkableMode` is `Constrained`.",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "density",
+          "description": "Density of the underlying kinematic PhysX actor.",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "scaleCoefficient",
+          "description": "Scale factor of the underlying kinematic PhysX actor. Should be < 1 to avoid pushing objects through walls.",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "volumeGrowth",
+          "description": "Size of the region around the controller to cache. Must be between 1 and 2.",
+          "type": "number",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "ControllerMoveResult",
+      "description": "Contains information about what happened during `Physics.moveController`.",
+      "properties": [
+        {
+          "name": "hasSideCollisions",
+          "description": "True if any collision events occurred this move to the controller's sides",
+          "type": "boolean"
+        },
+        {
+          "name": "hasTopCollisions",
+          "description": "True if any collision events occurred this move to the top of the controller",
+          "type": "boolean"
+        },
+        {
+          "name": "hasBottomCollisions",
+          "description": "True if any collision events occurred this move to the bottom of the controller",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "RaycastOptions",
+      "description": [
+        "Configures raycast and sweep queries for the desired behaviour and performance.",
+        "All properties can be left defaulted to sensible values, maintaining expected behaviour while minimising performance impact from the more specialised features."
+      ],
+      "properties": [
+        {
+          "name": "anyHit",
+          "description": "True to end the trace early on _any_ blocking hit, not just closest.",
+          "type": "boolean",
+          "optional": true,
+          "defaultValue": false
+        },
+        {
+          "name": "dontBlock",
+          "description": "Causes all intersected objects to be considered 'touching' hits, allowing the query to move through objects.",
+          "type": "boolean",
+          "optional": true,
+          "defaultValue": false
+        },
+        {
+          "name": "includeStatic",
+          "description": "Toggles inclusion of static rigid-bodies in the query.",
+          "type": "boolean",
+          "optional": true,
+          "defaultValue": true
+        },
+        {
+          "name": "includeDynamic",
+          "description": "Toggles inclusion of dynamic rigid-bodies in the query.",
+          "type": "boolean",
+          "optional": true,
+          "defaultValue": true
+        },
+        {
+          "name": "includeTouching",
+          "description": "Collects hits for non-blocking objects, or all objects if `dontBlock` is `true`.",
+          "type": "boolean",
+          "optional": true,
+          "defaultValue": false
+        },
+        {
+          "name": "includePosition",
+          "description": "Toggles calculation of hit position on all results.",
+          "type": "boolean",
+          "optional": true,
+          "defaultValue": true
+        },
+        {
+          "name": "includeNormal",
+          "description": "Toggles calculation of hit normal on all results.",
+          "type": "boolean",
+          "optional": true,
+          "defaultValue": true
+        },
+        {
+          "name": "includeUv",
+          "description": "Toggles inclusion of face UV on results which hit a triangle mesh or height field.",
+          "type": "boolean",
+          "optional": true,
+          "defaultValue": false
+        },
+        {
+          "name": "includeMtd",
+          "description": "Toggles calculation of Minimum Translational Distance for initial overlaps.",
+          "type": "boolean",
+          "optional": true,
+          "defaultValue": false
+        },
+        {
+          "name": "mask",
+          "description": "Four 2-byte bitwise filter masks following the [PhysX convention](https://nvidia-omniverse.github.io/PhysX/physx/5.4.2/docs/SceneQueries.html#pxfilterdata-fixed-function-filtering).",
+          "type": {
+            "type": "array",
+            "items": "number"
+          },
+          "optional": true,
+          "defaultValue": "{ 0, 0, 0, 0 }"
+        }
+      ]
+    },
+    {
+      "name": "RaycastResultHit",
+      "description": "A blocking or touching hit returned from a ray or sweep scene query. The contents will depend on the `RaycastOptions` passed to the query method.",
+      "properties": [
+        {
+          "name": "entity",
+          "description": "Entity that was hit, or `nil` if object isn't linked to an entity.",
+          "type": "entity",
+          "optional": true
+        },
+        {
+          "name": "distance",
+          "description": "Distance travelled along the query's direction. MTD if `includeMtd` was `true` and the query had initial overlap.",
+          "type": "vector"
+        },
+        {
+          "name": "position",
+          "description": "Hit position, or `nil` if `includePosition` was `false`.",
+          "type": "vector",
+          "optional": true
+        },
+        {
+          "name": "normal",
+          "description": "Hit normal, or `nil` if `includeNormal` was `false`.",
+          "type": "vector",
+          "optional": true
+        },
+        {
+          "name": "uv",
+          "description": "Hit UV, or `nil` if `includeUv` was `false` or the hit object isn't a mesh.",
+          "type": {
+            "type": "array",
+            "items": "number"
+          },
+          "optional": true
+        },
+        {
+          "name": "hadInitialOverlap",
+          "description": "True if the query had initial overlap with an object at the origin.",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "RaycastResult",
+      "description": "Result of a ray or sweep scene query.",
+      "properties": [
+        {
+          "name": "blockingHit",
+          "description": "Closest blocking hit if the query generated one.",
+          "type": "RaycastResultHit",
+          "optional": true
+        },
+        {
+          "name": "touchingHits",
+          "description": "List of touching hits the query generated. Empty if no touching hits or `includeTouching` was `false`.",
+          "type": {
+            "type": "array",
+            "items": "RaycastResultHit"
+          }
+        }
+      ]
+    },
+    {
+      "name": "OverlapOptions",
+      "description": [
+        "Configures overlap queries for the desired behaviour and performance.",
+        "All properties can be left defaulted to sensible values, maintaining expected behaviour while minimising performance impact from the more specialised features."
+      ],
+      "properties": [
+        {
+          "name": "includeStatic",
+          "description": "Toggles inclusion of static rigid-bodies in the query.",
+          "type": "boolean",
+          "optional": true,
+          "defaultValue": true
+        },
+        {
+          "name": "includeDynamic",
+          "description": "Toggles inclusion of dynamic rigid-bodies in the query.",
+          "type": "boolean",
+          "optional": true,
+          "defaultValue": true
+        },
+        {
+          "name": "mask",
+          "description": "Four 2-byte bitwise filter masks following the [PhysX convention](https://nvidia-omniverse.github.io/PhysX/physx/5.4.2/docs/SceneQueries.html#pxfilterdata-fixed-function-filtering).",
+          "type": {
+            "type": "array",
+            "items": "number"
+          },
+          "optional": true,
+          "defaultValue": "{ 0, 0, 0, 0 }"
+        }
+      ]
+    }
+  ],
+  "enums": [
+    {
+      "name": "ForceMode",
+      "description": "Force modes which describe the unit of the force or torque given to `addForce` and `addTorque`.",
+      "values": ["Force", "Impulse", "VelocityChange", "Acceleration"]
+    },
+    {
+      "name": "ControllerShape",
+      "description": "Collider shape to use for character controllers.",
+      "values": ["Box", "Capsule"]
+    },
+    {
+      "name": "ClimbingMode",
+      "description": "Climbing mode to use for capsule character controllers ([PhysX Docs](https://nvidia-omniverse.github.io/PhysX/physx/5.4.2/docs/CharacterControllers.html#climbing-mode))",
+      "values": ["Easy", "Constrained"]
+    },
+    {
+      "name": "NonWalkableMode",
+      "description": "How the character controller should handle non-walkable surfaces (e.g. steep slopes)",
+      "values": ["PreventClimbing", "PreventClimbingAndForceSliding"]
+    },
+    {
+      "name": "JointType",
+      "description": "Joint types governing which limits and drives are supported for the joint.",
+      "values": ["Fixed", "Linear", "Hinge", "HingeUnwrapped", "BallSocket"]
+    },
+    {
+      "name": "JointMotion",
+      "description": "Allowed motion of the joint along or about a degree of freedom.",
+      "values": ["Locked", "Limited", "Free"]
+    },
+    {
+      "name": "DegreeOfFreedom",
+      "description": "Degrees of freedom along or about which a joint can move.",
+      "values": ["LinearX", "LinearY", "LinearZ", "AngularX", "AngularY", "AngularZ"]
+    }
+  ],
+  "events": [
+    {
+      "name": "tick",
+      "description": "Fires every time the physics engine is ticked (at the fixed physics timestep).",
+      "parameters": [
+        {
+          "name": "deltaTime",
+          "description": "The time in seconds since the last physics tick (the fixed timestep).",
+          "type": "number"
+        }
+      ],
+      "returns": []
+    }
+  ]
+}

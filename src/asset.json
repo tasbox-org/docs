@@ -1,0 +1,381 @@
+{
+  "name": "Asset",
+  "description": "Library for reading assets of all types from the filesystem.",
+  "functions": [
+    {
+      "name": "loadModel",
+      "description": [
+        "Loads a 3D model at the given path from the virtual filesystem.",
+        "",
+        "The given path should not contain a file extension, as this is determined automatically from a list of supported formats:",
+        "- `.glb` - Binary glTF",
+        "- `.gltf` - Text glTF",
+        "- `.mdl` - Source Engine MDL"
+      ],
+      "parameters": [
+        {
+          "name": "path",
+          "description": "Path to the model in the VFS, minus an extension.",
+          "type": "string"
+        }
+      ],
+      "returns": [
+        {
+          "name": "asset",
+          "description": "The loaded asset.",
+          "type": "Asset3d"
+        }
+      ]
+    },
+    {
+      "name": "loadMap",
+      "description": [
+        "Loads a map at the given path from the virtual filesystem.",
+        "",
+        "The given path should not contain a file extension, as this is determined automatically from a list of supported formats:",
+        "- `.bsp` - Source Engine BSP"
+      ],
+      "parameters": [
+        {
+          "name": "path",
+          "description": "Path to the map in the VFS, minus an extension.",
+          "type": "string"
+        }
+      ],
+      "returns": [
+        {
+          "name": "asset",
+          "description": "The loaded asset.",
+          "type": "Map"
+        }
+      ]
+    }
+  ],
+  "classes": [
+    {
+      "name": "Asset3dRigidBody",
+      "description": "Internal structure of `Asset3d` describing the physics motion of a node.",
+      "properties": [
+        {
+          "name": "isStatic",
+          "description": "Whether this rigid-body is static (generates collisions but cannot move).",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "Asset3dNode",
+      "description": "Internal structure of `Asset3d` which can be considered 1:1 with TASBox entities.",
+      "properties": [
+        {
+          "name": "isRoot",
+          "description": "Whether this node is at the root of the hierarchy (i.e. has no parent).",
+          "type": "boolean"
+        },
+        {
+          "name": "shouldPrune",
+          "description": "Whether this node should be discarded when loading (i.e. should not create an entity).",
+          "type": "boolean"
+        },
+        {
+          "name": "name",
+          "description": "Optional display name for the entity.",
+          "type": "string"
+        },
+        {
+          "name": "children",
+          "description": "Indices of this node's children in the asset's `nodes` array.",
+          "type": {
+            "type": "array",
+            "items": "number"
+          }
+        },
+        {
+          "name": "position",
+          "description": "Position of this node relative to its parent.",
+          "type": "vector"
+        },
+        {
+          "name": "orientation",
+          "description": "Orientation of this node relative to its parent.",
+          "type": "Quaternion"
+        },
+        {
+          "name": "scale",
+          "description": "Scale of this node relative to its parent.",
+          "type": "vector"
+        },
+        {
+          "name": "rigidBody",
+          "description": "Optional rigid-body motion for this node.",
+          "type": "Asset3dRigidBody",
+          "optional": true
+        },
+        {
+          "name": "colliderIndex",
+          "description": "Optional index of a physics collider to attach to this node.",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "meshIndex",
+          "description": "Optional index of a mesh to attach to this node.",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "skeletonIndex",
+          "description": "Optional index of a skeleton to attach to this node.",
+          "type": "number",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "Asset3dInverseBindPose",
+      "description": "Internal structure of `Asset3d` describing the inverse bind pose of a bone.",
+      "properties": [
+        {
+          "name": "position",
+          "type": "vector"
+        },
+        {
+          "name": "orientation",
+          "type": "Quaternion"
+        }
+      ]
+    },
+    {
+      "name": "Asset3dBone",
+      "description": "Internal structure of `Asset3d` describing the bone of a skeleton.",
+      "properties": [
+        {
+          "name": "nodeIndex",
+          "description": "Index of the bone's node in the asset's node array.",
+          "type": "number"
+        },
+        {
+          "name": "inverseBindPose",
+          "description": "Inverse bind pose of the bone used for pre-transforming the mesh during skinning.",
+          "type": "Asset3dInverseBindPose"
+        }
+      ]
+    },
+    {
+      "name": "Asset3dSkeleton",
+      "description": "Internal structure of `Asset3d` listing nodes to use as bone positions for skinned meshes.",
+      "properties": [
+        {
+          "name": "bones",
+          "description": "List of bones which skinned meshes that reference this skeleton index into.",
+          "type": "Asset3dBone"
+        }
+      ]
+    },
+    {
+      "name": "Asset3dArticulationLimit",
+      "description": "Internal structure of `Asset3d` describing a limit on a single degree of freedom of an articulation link's constraint.",
+      "properties": [
+        {
+          "name": "min",
+          "description": "Minimum rotation about this degree of freedom in radians.",
+          "type": "number"
+        },
+        {
+          "name": "max",
+          "description": "Maximum rotation about this degree of freedom in radians.",
+          "type": "number"
+        },
+        {
+          "name": "isFixed",
+          "description": "Whether the limit is fixed (min and max are within a small tolerance).",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "Asset3dArticulationLimits",
+      "description": "Internal structure of `Asset3d` describing the limits of an articulation link's constraint.",
+      "properties": [
+        {
+          "name": "angularX",
+          "description": "Limit on rotation about the joint's local X axis (in radians).",
+          "type": "Asset3dArticulationLimit"
+        },
+        {
+          "name": "angularY",
+          "description": "Limit on rotation about the joint's local Y axis (in radians).",
+          "type": "Asset3dArticulationLimit"
+        },
+        {
+          "name": "angularZ",
+          "description": "Limit on rotation about the joint's local Z axis (in radians).",
+          "type": "Asset3dArticulationLimit"
+        },
+        {
+          "name": "jointType",
+          "description": "Joint type with the minimum number of degrees of freedom for these limits.",
+          "type": "JointType"
+        }
+      ]
+    },
+    {
+      "name": "Asset3dArticulationConstraint",
+      "description": "Internal structure of `Asset3d` describing the constraint formed by an articulation link.",
+      "properties": [
+        {
+          "name": "limits",
+          "description": "Limits of the constraint about each degree of freedom.",
+          "type": "Asset3dArticulationLimits"
+        }
+      ]
+    },
+    {
+      "name": "Asset3dArticulationLink",
+      "description": "Internal structure of `Asset3d` describing a link between two nodes in an articulation.",
+      "properties": [
+        {
+          "name": "parentNodeIndex",
+          "description": "Index of the link's parent in the asset's node array.",
+          "type": "number"
+        },
+        {
+          "name": "childNodeIndex",
+          "description": "Index of the link's child in the asset's node array.",
+          "type": "number"
+        },
+        {
+          "name": "constraint",
+          "description": "Details about the constraint between the parent and child nodes.",
+          "type": "Asset3dArticulationConstraint"
+        }
+      ]
+    },
+    {
+      "name": "Asset3dArticulation",
+      "description": "Internal structure of `Asset3d` describing a physics reduced coordinate articulation.",
+      "properties": [
+        {
+          "name": "rootNodeIndex",
+          "description": "Index of the articulation root in the asset's node array.",
+          "type": "number"
+        },
+        {
+          "name": "links",
+          "description": "Links between nodes in the articulation.",
+          "type": {
+            "type": "array",
+            "items": "Asset3dArticulationLink"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Asset3dCollider",
+      "description": "Internal structure of `Asset3d` describing a geometry with mass properties.",
+      "properties": [
+        {
+          "name": "geometry",
+          "type": "PhysicsGeometry"
+        },
+        {
+          "name": "mass",
+          "type": "number"
+        },
+        {
+          "name": "centreOfMass",
+          "type": "vector"
+        }
+      ]
+    },
+    {
+      "name": "Asset3d",
+      "description": "A 3D model or prefab containing materials, meshes, physics objects and more. Roughly follows the glTF structure.",
+      "properties": [
+        {
+          "name": "nodes",
+          "description": "Primary structure of the asset, defining a hierarchy of nodes (which can be considered 1:1 with entities).",
+          "type": {
+            "type": "array",
+            "items": "Asset3dNode"
+          }
+        },
+        {
+          "name": "skeletons",
+          "description": "Visual skeletons referenced by skinned mesh nodes.",
+          "type": {
+            "type": "array",
+            "items": "Asset3dSkeleton"
+          }
+        },
+        {
+          "name": "articulations",
+          "description": "Physics articulations joining nodes together into a single reduced coordinate system for simulation stability.",
+          "type": {
+            "type": "array",
+            "items": "Asset3dArticulation"
+          }
+        },
+        {
+          "name": "colliders",
+          "description": "Physics colliders comprised of geometry and mass properties.",
+          "type": {
+            "type": "array",
+            "items": "Asset3dCollider"
+          }
+        },
+        {
+          "name": "meshes",
+          "description": "Visual meshes referenced by nodes.",
+          "type": {
+            "type": "array",
+            "items": "Mesh"
+          }
+        },
+        {
+          "name": "materials",
+          "description": "Visual materials referenced by meshes.",
+          "type": {
+            "type": "array",
+            "items": "Material"
+          }
+        }
+      ]
+    },
+    {
+      "name": "MapEntity",
+      "description": "Internal structure of `Map` representing properties of an entity to spawn.",
+      "properties": [
+        {
+          "name": "position",
+          "description": "Position of the entity in world space.",
+          "type": "vector"
+        },
+        {
+          "name": "orientation",
+          "description": "Orientation of the entity in world space.",
+          "type": "Quaternion"
+        },
+        {
+          "name": "asset",
+          "description": "Optional asset to spawn at the entity's position and orientation.",
+          "type": "Asset3d"
+        }
+      ]
+    },
+    {
+      "name": "Map",
+      "description": "A map containing many entities.",
+      "properties": [
+        {
+          "name": "entities",
+          "description": "List of entities in the map.",
+          "type": {
+            "type": "array",
+            "items": "MapEntity"
+          }
+        }
+      ]
+    }
+  ]
+}

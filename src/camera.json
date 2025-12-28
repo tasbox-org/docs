@@ -1,0 +1,71 @@
+{
+  "name": "Camera",
+  "description": "API for manipulating the camera.",
+  "functions": [
+    {
+      "name": "setViewTarget",
+      "description": "Sets the target of the camera.",
+      "parameters": [
+        {
+          "name": "position",
+          "description": "The position of the camera.",
+          "type": "vector"
+        },
+        {
+          "name": "lookTarget",
+          "description": "The target to look at.",
+          "type": "vector"
+        },
+        {
+          "name": "upDirection",
+          "description": "The up direction of the camera.",
+          "type": "vector",
+          "defaultValue": "Engine.WORLD_UP_DIRECTION",
+          "optional": true
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "setViewDirection",
+      "description": "Sets the direction of the camera.",
+      "parameters": [
+        {
+          "name": "position",
+          "description": "The position of the camera.",
+          "type": "vector"
+        },
+        {
+          "name": "direction",
+          "description": "The direction of the camera.",
+          "type": "vector"
+        },
+        {
+          "name": "upDirection",
+          "description": "The up direction of the camera.",
+          "type": "vector",
+          "defaultValue": "Engine.WORLD_UP_DIRECTION",
+          "optional": true
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "setViewOrientation",
+      "description": "Sets the orientation of the camera.",
+      "parameters": [
+        {
+          "name": "position",
+          "description": "The position of the camera.",
+          "type": "vector"
+        },
+        {
+          "name": "orientation",
+          "description": "The orientation of the camera.",
+          "type": "Quaternion"
+        }
+      ],
+      "returns": []
+    }
+  ]
+}

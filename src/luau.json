@@ -1,0 +1,162 @@
+{
+  "name": "Luau",
+  "description": "API for creating and running isolated Luau environments.",
+  "functions": [
+    {
+      "name": "createSandbox",
+      "description": "Creates a new Luau sandbox.",
+      "parameters": [],
+      "returns": [
+        {
+          "name": "sandbox",
+          "description": "The new sandbox.",
+          "type": "sandbox"
+        }
+      ]
+    },
+    {
+      "name": "setSandboxGlobals",
+      "description": "Sets the global environment for a sandbox.",
+      "parameters": [
+        {
+          "name": "sandbox",
+          "description": "The sandbox to set the globals for.",
+          "type": "sandbox"
+        },
+        {
+          "name": "globals",
+          "description": "The globals to set.",
+          "type": "table"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "getScriptPath",
+      "description": "Gets the path of the current caller, or alternatively, the path of the caller referenced by the level.",
+      "parameters": [
+        {
+          "name": "level",
+          "description": "The level of the caller to get the path of.",
+          "type": "number",
+          "defaultValue": 1,
+          "optional": true
+        }
+      ],
+      "returns": [
+        {
+          "name": "path",
+          "description": "The path of the caller.",
+          "type": "string",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "getScriptDirectory",
+      "description": "Gets the directory of the current caller, or alternatively, the directory of the caller referenced by the level.",
+      "parameters": [
+        {
+          "name": "level",
+          "description": "The level of the caller to get the directory of.",
+          "type": "number",
+          "defaultValue": 1,
+          "optional": true
+        }
+      ],
+      "returns": [
+        {
+          "name": "directory",
+          "description": "The directory of the caller.",
+          "type": "string",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "run",
+      "description": "Runs a script in a sandbox. The given path is used when resolving relative file paths, such as when calling `Filesystem.toAbsolutePath`.",
+      "parameters": [
+        {
+          "name": "sandbox",
+          "description": "The sandbox to run the script in. The executed script has access to the sandbox using the `THIS_SANDBOX` global.",
+          "type": "sandbox"
+        },
+        {
+          "name": "scriptPath",
+          "description": "The path to use for the script. The executed script has access to the path using the `SCRIPT_PATH` global.",
+          "type": "string"
+        },
+        {
+          "name": "sourceCode",
+          "description": "The source code of the script.",
+          "type": "string"
+        }
+      ],
+      "returns": [
+        {
+          "name": "result",
+          "description": "The result of the script.",
+          "type": "any"
+        }
+      ]
+    },
+    {
+      "name": "runFile",
+      "description": "Runs a script file in a sandbox.",
+      "parameters": [
+        {
+          "name": "sandbox",
+          "description": "The sandbox to run the script in.",
+          "type": "sandbox"
+        },
+        {
+          "name": "path",
+          "description": "The path to the script file.",
+          "type": "string"
+        }
+      ],
+      "returns": [
+        {
+          "name": "result",
+          "description": "The result of the script.",
+          "type": "any"
+        }
+      ]
+    },
+    {
+      "name": "createRequire",
+      "description": "Creates a function which runs each required module in a sandbox and caches the result.",
+      "parameters": [
+        {
+          "name": "sandbox",
+          "description": "The sandbox to run the required modules in.",
+          "type": "sandbox"
+        }
+      ],
+      "returns": [
+        {
+          "name": "require",
+          "description": "The require function.",
+          "type": {
+            "type": "function",
+            "parameters": [
+              {
+                "name": "path",
+                "description": "The path to the module.",
+                "type": "string"
+              }
+            ],
+            "returns": [
+              {
+                "name": "module",
+                "description": "The return value of the executed file.",
+                "type": "any"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

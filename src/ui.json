@@ -1,0 +1,624 @@
+{
+  "name": "UI",
+  "description": [
+    "Retained mode and DOM-style API to render interactive user-interfaces, with a Solid.js-inspired UI framework built on top.",
+    "",
+    "It's recommended to either use the out-of-the-box UI framework (or build your own) instead of working with the retained mode API directly.",
+    "Retained mode has been chosen to significantly reduce the overhead of communicating between Lua and the engine for mostly static UIs."
+  ],
+  "functions": [
+    {
+      "name": "createElement",
+      "description": "Creates a new containing element element.",
+      "parameters": [],
+      "returns": [
+        {
+          "name": "element",
+          "type": "Element"
+        }
+      ]
+    },
+    {
+      "name": "createTextElement",
+      "description": "Creates a new text element.",
+      "parameters": [
+        {
+          "name": "textContent",
+          "description": "Initial text content of the element.",
+          "type": "string"
+        }
+      ],
+      "returns": [
+        {
+          "name": "element",
+          "type": "TextElement"
+        }
+      ]
+    },
+    {
+      "name": "isTextElement",
+      "description": "Returns whether the given parameter is a text UI element.",
+      "parameters": [
+        {
+          "name": "value",
+          "description": "The value to check.",
+          "type": "any"
+        }
+      ],
+      "returns": [
+        {
+          "name": "isTextElement",
+          "description": "Whether the value is a text element.",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "removeElement",
+      "description": "Removes the element from its parent. No-op if the element has no parent.",
+      "parameters": [
+        {
+          "name": "child",
+          "type": ["Element", "TextElement"]
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "appendElement",
+      "description": [
+        "Appends an element to the end of another element's children.",
+        "Removes the child element from its current parent if it has one."
+      ],
+      "parameters": [
+        {
+          "name": "parent",
+          "description": "Element to append to.",
+          "type": "Element"
+        },
+        {
+          "name": "child",
+          "description": "Element to be appended.",
+          "type": ["Element", "TextElement"]
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "getChildren",
+      "description": [
+        "Returns a list of the element's children.",
+        "This is a copy, so will not update if the children of the element change",
+        "(nor will the element's children change if this list is modified)."
+      ],
+      "parameters": [
+        {
+          "name": "element",
+          "type": "Element"
+        }
+      ],
+      "returns": [
+        {
+          "name": "children",
+          "type": {
+            "type": "array",
+            "items": ["Element", "TextElement"]
+          }
+        }
+      ]
+    },
+    {
+      "name": "getElementName",
+      "description": "Returns the debug name of the element.",
+      "parameters": [
+        {
+          "name": "element",
+          "type": "Element"
+        }
+      ],
+      "returns": [
+        {
+          "name": "name",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "setElementName",
+      "description": "Sets the debug name of the element.",
+      "parameters": [
+        {
+          "name": "element",
+          "type": "Element"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "getTextContent",
+      "description": "Returns the contents of a text element.",
+      "parameters": [
+        {
+          "name": "element",
+          "type": "TextElement"
+        }
+      ],
+      "returns": [
+        {
+          "name": "textContent",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "setTextContent",
+      "description": "Updates the contents of a text element.",
+      "parameters": [
+        {
+          "name": "element",
+          "type": "TextElement"
+        },
+        {
+          "name": "textContent",
+          "type": "string"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "setStyle",
+      "description": [
+        "Sets a style on the element when in the specified state.",
+        "",
+        "Styles are used in the order `Clicked -> Hovered -> Always -> Engine Defaults`.",
+        "The first state as per the order above which has a style set will be used."
+      ],
+      "parameters": [
+        {
+          "name": "element",
+          "type": "Element"
+        },
+        {
+          "name": "style",
+          "type": "UI.Style"
+        },
+        {
+          "name": "value",
+          "type": [
+            "boolean",
+            "number",
+            "string",
+            "Colour",
+            "UI.SizeMode",
+            "UI.ChildAlignment",
+            "UI.Direction",
+            "UI.TextWrapping",
+            "UI.TextAlignment",
+            "UI.Display",
+            "UI.Overflow"
+          ],
+          "description": "Accepted type depends on the style being set."
+        },
+        {
+          "name": "when",
+          "type": "UI.StyleMode",
+          "description": "In which state the style will be used."
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "removeStyle",
+      "description": [
+        "Removes the style from the element when in the specified state.",
+        "",
+        "Styles are used in the order Clicked -> Hovered -> Always -> Engine Defaults.",
+        "Removing a style from one of the layers means the first set style in a lower state (as above) will be used instead."
+      ],
+      "parameters": [
+        {
+          "name": "element",
+          "type": "Element"
+        },
+        {
+          "name": "style",
+          "type": "UI.Style"
+        },
+        {
+          "name": "when",
+          "type": "UI.StyleMode",
+          "description": "In which state the style will be removed."
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "enableDebugger",
+      "description": "Enables the Clay debugger.",
+      "parameters": [],
+      "returns": []
+    },
+    {
+      "name": "disableDebugger",
+      "description": "Disables the Clay debugger.",
+      "parameters": [],
+      "returns": []
+    },
+    {
+      "name": "isDebuggerEnabled",
+      "description": "Returns whether the Clay debugger is enabled.",
+      "parameters": [],
+      "returns": [
+        {
+          "name": "debuggerEnabled",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "addEventListener",
+      "description": "Listen to events raised on the element to support user interaction.",
+      "parameters": [
+        {
+          "name": "element",
+          "type": "Element"
+        },
+        {
+          "name": "eventName",
+          "type": ["'mouseDown'", "'mouseUp'"]
+        },
+        {
+          "name": "callback",
+          "type": "function"
+        }
+      ],
+      "returns": [
+        {
+          "name": "callback",
+          "type": "function",
+          "description": "Callback that was passed in."
+        }
+      ]
+    },
+    {
+      "name": "removeEventListener",
+      "description": "Remove an event listener from the element.",
+      "parameters": [
+        {
+          "name": "element",
+          "type": "Element"
+        },
+        {
+          "name": "eventName",
+          "type": ["'mouseDown'", "'mouseUp'"]
+        },
+        {
+          "name": "callback",
+          "type": "function",
+          "description": "Callback that was passed to `addEventListener`."
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "createComponent",
+      "description": [
+        "Creates a component from the given function.",
+        "This sets up the component function as stateful and normalises its parameters."
+      ],
+      "parameters": [
+        {
+          "name": "componentFn",
+          "type": {
+            "type": "function",
+            "parameters": [
+              {
+                "name": "props",
+                "type": "table"
+              },
+              {
+                "name": "children",
+                "description": "Signal containing the child DOM elements of the component.",
+                "type": {
+                  "type": "function",
+                  "parameters": [],
+                  "returns": [
+                    {
+                      "name": "childElements",
+                      "type": {
+                        "type": "array",
+                        "items": ["Element", "TextElement"]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            "returns": [
+              {
+                "name": "elementProducer",
+                "type": "function",
+                "parameters": [],
+                "returns": [
+                  {
+                    "name": "elements",
+                    "type": {
+                      "type": "array",
+                      "items": {
+                        "type": "function",
+                        "parameters": [],
+                        "returns": [
+                          {
+                            "name": "elements",
+                            "type": {
+                              "type": "array",
+                              "items": ["Element", "TextElement"]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "returns": [
+        {
+          "name": "component",
+          "description": "The normalised component function.",
+          "type": {
+            "type": "function",
+            "parameters": [
+              {
+                "name": "props",
+                "type": "table",
+                "optional": true
+              },
+              {
+                "name": "children",
+                "type": {
+                  "type": "function",
+                  "parameters": [],
+                  "returns": [
+                    {
+                      "name": "elements",
+                      "type": "array",
+                      "items": {
+                        "type": "function",
+                        "parameters": [],
+                        "returns": [
+                          {
+                            "name": "elements",
+                            "type": {
+                              "type": "array",
+                              "items": ["Element", "TextElement"]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "optional": true
+              }
+            ],
+            "returns": [
+              {
+                "name": "elementsSignal",
+                "description": "Signal containing flattened DOM elements produced by the component.",
+                "type": {
+                  "type": "function",
+                  "parameters": [],
+                  "returns": [
+                    {
+                      "name": "elements",
+                      "type": {
+                        "type": "array",
+                        "items": ["Element", "TextElement"]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "render",
+      "description": [
+        "Resolves the component tree and appends all root nodes to the given element.",
+        "Should be called only once when initialising the UI."
+      ],
+      "parameters": [
+        {
+          "name": "component",
+          "description": "Root component of the application.",
+          "type": {
+            "type": "function",
+            "parameters": [
+              {
+                "name": "props",
+                "type": "table",
+                "optional": true
+              },
+              {
+                "name": "children",
+                "type": {
+                  "type": "array",
+                  "items": {
+                    "type": "function",
+                    "parameters": [],
+                    "returns": [
+                      {
+                        "name": "elements",
+                        "type": {
+                          "type": "array",
+                          "items": ["Element", "TextElement"]
+                        }
+                      }
+                    ]
+                  }
+                },
+                "optional": true
+              }
+            ],
+            "returns": [
+              {
+                "name": "elementsSignal",
+                "description": "Signal containing flattened DOM elements produced by the component.",
+                "type": {
+                  "type": "function",
+                  "parameters": [],
+                  "returns": [
+                    {
+                      "name": "elements",
+                      "type": {
+                        "type": "array",
+                        "items": ["Element", "TextElement"]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "name": "element",
+          "description": "UI element to mount the components to.",
+          "type": "Element"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "toString",
+      "description": [
+        "Stringifies the element and its children into a format resembling HTML/XML",
+        "Useful for debugging and snapshot testing."
+      ],
+      "parameters": [
+        {
+          "name": "element",
+          "type": ["Element", "TextElement"]
+        },
+        {
+          "name": "indent",
+          "description": "Number of spaces to indent all lines by. Defaults to `0`.",
+          "type": "integer",
+          "optional": true
+        }
+      ],
+      "returns": [
+        {
+          "name": "elementMarkup",
+          "type": "string"
+        }
+      ]
+    }
+  ],
+  "enums": [
+    {
+      "name": "Style",
+      "description": "Style properties of `Element`s.",
+      "values": [
+        "Width",
+        "MinWidth",
+        "MaxWidth",
+        "WidthMode",
+        "Height",
+        "MinHeight",
+        "MaxHeight",
+        "HeightMode",
+        "PaddingLeft",
+        "PaddingRight",
+        "PaddingTop",
+        "PaddingBottom",
+        "Gap",
+        "AlignmentX",
+        "AlignmentY",
+        "Direction",
+        "BackgroundColour",
+        "BackgroundImage",
+        "CornerRadiusTopLeft",
+        "CornerRadiusTopRight",
+        "CornerRadiusBottomLeft",
+        "CornerRadiusBottomRight",
+        "BorderColour",
+        "BorderLeft",
+        "BorderRight",
+        "BorderTop",
+        "BorderBottom",
+        "BorderBetween",
+        "TextColour",
+        "FontSize",
+        "LetterSpacing",
+        "LineHeight",
+        "TextWrapping",
+        "TextAlignment",
+        "OverflowX",
+        "OverflowY"
+      ]
+    },
+    {
+      "name": "StyleMode",
+      "description": "When to apply a given style. Styles apply in the order `Clicked -> Hovered -> Always -> Engine Defaults`.",
+      "values": ["Always", "Hovered", "Clicked"]
+    },
+    {
+      "name": "SizeMode",
+      "description": [
+        "Determines how the `Element` will respond to changes in width/height by its parent and children.",
+        "`FixedPercent` fixes the `Element`'s width/height to a percentage (0-1) of the parent's size,",
+        "using the first of `Width`, `MaxWidth` or `MinWidth` which is defined (and `*Height` for height)."
+      ],
+      "values": ["Shrink", "Grow", "FixedPercent"]
+    },
+    {
+      "name": "ChildAlignment",
+      "description": "Alignment of children on a given axis relative to this `Element`'s content box.",
+      "values": ["Start", "Centre", "End"]
+    },
+    {
+      "name": "Direction",
+      "description": "Direction that children are laid out in this `Element`.",
+      "values": ["Horizontal", "Vertical"]
+    },
+    {
+      "name": "TextWrapping",
+      "description": "Where in the string it's valid to insert line breaks in order to prevent overflow.",
+      "values": ["Words", "Newlines", "None"]
+    },
+    {
+      "name": "TextAlignment",
+      "description": "Alignment of `TextElement`s which are the immediate child of this `Element`.",
+      "values": ["Left", "Centre", "Right"]
+    },
+    {
+      "name": "Display",
+      "description": "Determines the visibility of the element and its children.",
+      "values": ["Visible", "ContentsHidden", "Contents"]
+    },
+    {
+      "name": "Overflow",
+      "description": "Visibility and scrolling behaviour of child content overflowing the content box.",
+      "values": ["Visible", "Scroll", "Hidden"]
+    }
+  ],
+  "constants": [
+    {
+      "name": "SCREEN",
+      "description": "Root DOM element rendered to the screen in 2D. Shared by all screenspace UI, so you'll want to further restrict/abstract this if exposed to addons in your game.",
+      "type": "Element"
+    }
+  ]
+}

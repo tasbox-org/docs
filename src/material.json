@@ -1,0 +1,11 @@
+{
+  "name": "Material",
+  "description": "Library for creating, reading and updating materials.",
+  "constants": [
+    {
+      "name": "DEFAULT_MATERIAL",
+      "description": "Read-only material instance used for assets with missing materials, and as the default for entity material slots.",
+      "type": "Material"
+    }
+  ]
+}

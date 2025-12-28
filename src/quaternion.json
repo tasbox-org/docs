@@ -1,0 +1,186 @@
+{
+  "name": "Quaternion",
+  "realms": ["menu", "client", "server"],
+  "description": "API for creating and manipulating quaternions.",
+  "functions": [
+    {
+      "name": "create",
+      "description": "Creates a new quaternion.",
+      "parameters": [
+        {
+          "name": "imaginary",
+          "type": "vector",
+          "description": "The imaginary part of the quaternion."
+        },
+        {
+          "name": "scalar",
+          "type": "number",
+          "description": "The scalar part of the quaternion."
+        }
+      ],
+      "returns": [
+        {
+          "name": "quaternion",
+          "type": "Quaternion"
+        }
+      ]
+    },
+    {
+      "name": "fromEuler",
+      "description": "Creates a quaternion from Euler angles.",
+      "parameters": [
+        {
+          "name": "eulerAngles",
+          "type": "vector"
+        }
+      ],
+      "returns": [
+        {
+          "name": "quaternion",
+          "type": "Quaternion"
+        }
+      ]
+    },
+    {
+      "name": "toEuler",
+      "description": "Converts a quaternion to Euler angles in pitch, yaw, roll order.",
+      "parameters": [
+        {
+          "name": "quaternion",
+          "type": "Quaternion"
+        }
+      ],
+      "returns": [
+        {
+          "name": "eulerAngles",
+          "type": "vector"
+        }
+      ]
+    },
+    {
+      "name": "fromAxisAngle",
+      "description": "Creates a quaternion from an axis and an angle.",
+      "parameters": [
+        {
+          "name": "axis",
+          "type": "vector",
+          "description": "The axis of rotation."
+        },
+        {
+          "name": "angle",
+          "type": "number",
+          "description": "The angle of rotation in radians about the axis."
+        }
+      ],
+      "returns": [
+        {
+          "name": "quaternion",
+          "type": "Quaternion"
+        }
+      ]
+    },
+    {
+      "name": "conjugate",
+      "description": "Returns the conjugate of a quaternion.",
+      "parameters": [
+        {
+          "name": "quaternion",
+          "type": "Quaternion"
+        }
+      ],
+      "returns": [
+        {
+          "name": "quaternion",
+          "type": "Quaternion"
+        }
+      ]
+    },
+    {
+      "name": "inverse",
+      "description": "Returns the inverse of a quaternion.",
+      "parameters": [
+        {
+          "name": "quaternion",
+          "type": "Quaternion"
+        }
+      ],
+      "returns": [
+        {
+          "name": "quaternion",
+          "type": "Quaternion"
+        }
+      ]
+    },
+    {
+      "name": "rotate",
+      "description": "Rotates a vector by a quaternion.",
+      "parameters": [
+        {
+          "name": "quaternion",
+          "type": "Quaternion",
+          "description": "The quaternion to rotate by."
+        },
+        {
+          "name": "vector",
+          "type": "vector",
+          "description": "The vector to rotate."
+        }
+      ],
+      "returns": [
+        {
+          "name": "vector",
+          "type": "vector",
+          "description": "The rotated vector."
+        }
+      ]
+    },
+    {
+      "name": "mul",
+      "description": "Multiplies two quaternions. Quaternion multiplication is not commutative.",
+      "parameters": [
+        {
+          "name": "a",
+          "type": "Quaternion",
+          "description": "The first quaternion."
+        },
+        {
+          "name": "b",
+          "type": "Quaternion",
+          "description": "The second quaternion."
+        }
+      ],
+      "returns": [
+        {
+          "name": "quaternion",
+          "type": "Quaternion",
+          "description": "The product of the two quaternions."
+        }
+      ]
+    }
+  ],
+  "constants": [
+    {
+      "name": "IDENTITY",
+      "type": "Quaternion",
+      "description": "An identity quaternion is the inverse of itself (i.e. it performs no rotation)."
+    }
+  ],
+  "classes": [
+    {
+      "name": "Quaternion",
+      "description": "Rotation represented by imaginary and scalar components which does not suffer from gimbal lock.",
+      "properties": [
+        {
+          "name": 1,
+          "type": "vector",
+          "description": "The imaginary part of the quaternion."
+        },
+        {
+          "name": 2,
+          "type": "number",
+          "description": "The scalar part of the quaternion."
+        }
+      ]
+    }
+  ]
+}

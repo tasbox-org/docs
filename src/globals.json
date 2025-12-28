@@ -1,0 +1,54 @@
+{
+  "name": "Globals",
+  "description": "API for global functions.",
+  "functions": [
+    {
+      "name": "issandbox",
+      "description": "Returns whether the given parameter is a sandbox.",
+      "parameters": [
+        {
+          "name": "value",
+          "description": "The value to check.",
+          "type": "any"
+        }
+      ],
+      "returns": [
+        {
+          "name": "isSandbox",
+          "description": "Whether the value is a sandbox.",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "require",
+      "description": [
+        "Requires a module.",
+        "Modules are luau scripts which are executed in a sandboxed environment.",
+        "Modules return a value which is cached and returned on subsequent calls.",
+        "Modules can also refer to their path using the `SCRIPT_PATH` global.",
+        "",
+        "#### File path resolution",
+        "- If the path begins with `/`, it will only search the root directory.",
+        "- If the path begins with `./`, it will search the directory of the calling script.",
+        "- If the path begins with `../`, it will search the parent directory of the calling script.",
+        "- If the path has no prefix, it will search the directory of the calling script, and then the root directory.",
+        "- If the module has no file extension, it instead searches for a `index.luau` file."
+      ],
+      "parameters": [
+        {
+          "name": "path",
+          "description": "The path to the module.",
+          "type": "string"
+        }
+      ],
+      "returns": [
+        {
+          "name": "module",
+          "description": "The return value of the executed file.",
+          "type": "any"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,162 @@
+{
+  "name": "State",
+  "description": [
+    "Solid.js-inspired state management library.",
+    "While it is intended to be used in conjunction with the UI library, state management has many use-cases outside of this."
+  ],
+  "functions": [
+    {
+      "name": "createSignal",
+      "description": [
+        "Creates a \"signal\" with a given initial value.",
+        "Signals form the backbone of a reactive system, allowing other code to observe their changes and run side effects accordingly.",
+        "",
+        "When read from within a tracking scope (e.g. `createEffect`), will add the signal to the list of observed signals in the scope,",
+        "causing the scope's observer to react to updates."
+      ],
+      "parameters": [
+        {
+          "name": "value",
+          "description": "Initial value for the signal.",
+          "type": "any"
+        }
+      ],
+      "returns": [
+        {
+          "name": "get",
+          "description": "Returns the current value of the signal.",
+          "type": {
+            "type": "function",
+            "parameters": [],
+            "returns": [
+              {
+                "name": "value",
+                "type": "any"
+              }
+            ]
+          }
+        },
+        {
+          "name": "set",
+          "description": "Sets the value of the signal and notifies all observers of the change.",
+          "type": {
+            "type": "function",
+            "parameters": [
+              {
+                "name": "value",
+                "type": "any"
+              }
+            ],
+            "returns": []
+          }
+        }
+      ]
+    },
+    {
+      "name": "createEffect",
+      "description": [
+        "Creates an \"effect\" which is triggered when any of the signals it uses are updated.",
+        "Simply calling the getter of a signal within the callback will cause the effect to observe changes.",
+        "",
+        "All observers and any child effects will be cleaned up when the effect is re-run,",
+        "allowing you to conditionally create effects or listen to a second signal based on the value of the first."
+      ],
+      "parameters": [
+        {
+          "name": "callback",
+          "description": "Callback to execute when any observed signals are updated.",
+          "type": {
+            "type": "function",
+            "parameters": [],
+            "returns": []
+          }
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "createMemo",
+      "description": [
+        "Memoises a value so that it's only recomputed when one of the observed signals changes.",
+        "The value returned is itself a signal, so that downstream effects are updated when the memoised value is recomputed."
+      ],
+      "parameters": [
+        {
+          "name": "callback",
+          "description": "Callback to execute when any observed signals are updated. Same as an effect.",
+          "type": {
+            "type": "function",
+            "parameters": [],
+            "returns": []
+          }
+        }
+      ],
+      "returns": [
+        {
+          "name": "get",
+          "description": "Returns the current value of the memo. Same as a signal's getter.",
+          "type": {
+            "type": "function",
+            "parameters": [],
+            "returns": [
+              {
+                "name": "value",
+                "type": "any"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "untrack",
+      "description": [
+        "Executes the callback immediately and without a tracking scope.",
+        "This allows for reading the values of signals inside of effect callbacks without observing future changes."
+      ],
+      "parameters": [
+        {
+          "name": "callback",
+          "type": {
+            "type": "function",
+            "parameters": [],
+            "returns": [
+              {
+                "name": "...",
+                "description": "Any values will be returned by `untrack`.",
+                "type": "...any"
+              }
+            ]
+          }
+        }
+      ],
+      "returns": [
+        {
+          "name": "...",
+          "description": "The values returned by `callback`.",
+          "type": "...any"
+        }
+      ]
+    },
+    {
+      "name": "onCleanup",
+      "description": [
+        "Registers a cleanup hook within the current tracking scope.",
+        "Will be called when the scope is disposed (e.g. when the parent of a nested effect is rerun, or a component is unmounted).",
+        "",
+        "Any signals read within the callback will not be tracked."
+      ],
+      "parameters": [
+        {
+          "name": "callback",
+          "type": {
+            "type": "function",
+            "parameters": [],
+            "returns": []
+          }
+        }
+      ],
+      "returns": []
+    }
+  ]
+}

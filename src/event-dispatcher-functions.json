@@ -1,0 +1,42 @@
+[
+  {
+    "name": "addEventListener",
+    "description": "Adds an event listener. A list of events can be found [here](#Events).",
+    "parameters": [
+      {
+        "name": "eventType",
+        "description": "The event to listen for.",
+        "type": "string"
+      },
+      {
+        "name": "callback",
+        "description": "The callback to use.",
+        "type": "function"
+      }
+    ],
+    "returns": [
+      {
+        "name": "callback",
+        "description": "The callback that was registered.",
+        "type": "function"
+      }
+    ]
+  },
+  {
+    "name": "removeEventListener",
+    "description": "Removes an event listener.",
+    "parameters": [
+      {
+        "name": "eventType",
+        "description": "The event to remove the listener from.",
+        "type": "string"
+      },
+      {
+        "name": "callback",
+        "description": "The callback to remove.",
+        "type": "function"
+      }
+    ],
+    "returns": []
+  }
+]

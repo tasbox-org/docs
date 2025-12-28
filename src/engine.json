@@ -1,0 +1,114 @@
+{
+  "name": "Engine",
+  "realms": ["menu", "client", "server"],
+  "description": "API for engine-related functions.",
+  "functions": [
+    {
+      "name": "getCurrentTime",
+      "description": "Gets the current time.",
+      "parameters": [],
+      "returns": [
+        {
+          "name": "time",
+          "description": "The current time in seconds.",
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "name": "quit",
+      "description": "Quits the game.",
+      "parameters": [],
+      "returns": []
+    },
+    {
+      "name": "setAddonGlobals",
+      "description": "Sets the global environment for addons.",
+      "parameters": [
+        {
+          "name": "callback",
+          "description": "The callback which returns the global environment used for addons.",
+          "type": {
+            "type": "function",
+            "parameters": [
+              {
+                "name": "sandbox",
+                "type": "sandbox",
+                "description": "The sandbox used for the addons."
+              },
+              {
+                "name": "require",
+                "type": "function",
+                "parameters": [
+                  {
+                    "name": "path",
+                    "type": "string",
+                    "description": "The path to the module."
+                  }
+                ],
+                "returns": [
+                  {
+                    "name": "module",
+                    "type": "any",
+                    "description": "The return value of the executed file."
+                  }
+                ]
+              }
+            ],
+            "returns": [
+              {
+                "name": "globals",
+                "type": "table",
+                "description": "The globals to set."
+              }
+            ]
+          }
+        }
+      ],
+      "returns": []
+    }
+  ],
+  "constants": [
+    {
+      "name": "WORLD_FORWARD_DIRECTION",
+      "description": "The forward direction of the world.",
+      "type": "vector"
+    },
+    {
+      "name": "WORLD_UP_DIRECTION",
+      "description": "The up direction of the world.",
+      "type": "vector"
+    },
+    {
+      "name": "WORLD_RIGHT_DIRECTION",
+      "description": "The right direction of the world.",
+      "type": "vector"
+    },
+    {
+      "name": "THIS_REALM",
+      "description": "The realm this script is executing in (Menu, Server or Client).",
+      "type": "Engine.Realm"
+    }
+  ],
+  "enums": [
+    {
+      "name": "Realm",
+      "description": "The realms or environments in which scripts can execute.",
+      "values": ["Menu", "Server", "Client"]
+    }
+  ],
+  "events": [
+    {
+      "name": "tick",
+      "description": "Fires every frame.",
+      "parameters": [
+        {
+          "name": "deltaTime",
+          "description": "The time in seconds since the last frame.",
+          "type": "number"
+        }
+      ],
+      "returns": []
+    }
+  ]
+}

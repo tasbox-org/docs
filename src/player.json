@@ -1,0 +1,242 @@
+{
+  "name": "Player",
+  "realms": ["client", "server"],
+  "description": "API for interacting with players.",
+  "functions": [
+    {
+      "name": "getConnecting",
+      "description": [
+        "Returns a list of players who are currently connecting, but are not yet connected.",
+        "See the `\"connecting\"` event for more details."
+      ],
+      "parameters": [],
+      "returns": [
+        {
+          "name": "players",
+          "description": "Connecting players",
+          "type": {
+            "type": "array",
+            "items": "Player"
+          }
+        }
+      ]
+    },
+    {
+      "name": "getConnected",
+      "description": [
+        "Returns a list of players who are currently connected.",
+        "See the `\"connected\"` event for more details."
+      ],
+      "parameters": [],
+      "returns": [
+        {
+          "name": "players",
+          "description": "Connected players",
+          "type": {
+            "type": "array",
+            "items": "Player"
+          }
+        }
+      ]
+    },
+    {
+      "name": "isConnecting",
+      "description": [
+        "Returns whether the given player is currently connecting, but not yet connected.",
+        "See the `\"connecting\"` event for more details."
+      ],
+      "parameters": [
+        {
+          "name": "player",
+          "description": "Player to check.",
+          "type": "Player"
+        }
+      ],
+      "returns": [
+        {
+          "name": "isConnecting",
+          "description": "True if the player is connecting.",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "isConnected",
+      "description": [
+        "Returns whether the given player is currently connected.",
+        "See the `\"connected\"` event for more details."
+      ],
+      "parameters": [
+        {
+          "name": "player",
+          "description": "Player to check.",
+          "type": "Player"
+        }
+      ],
+      "returns": [
+        {
+          "name": "isConnected",
+          "description": "True if the player is connected.",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "getEntity",
+      "description": [
+        "Returns the replicated entity representing this player, or `nil` if not yet initialised.",
+        "",
+        "You should use this for replicating information about the player (e.g. position) across the network.",
+        "Note that unlike regular entities, when the player entity is deleted it _does not_ delete its children.",
+        "You must clean up any child entities on disconnect by hand."
+      ],
+      "parameters": [
+        {
+          "name": "player",
+          "description": "Player to get the entity of.",
+          "type": "Player"
+        }
+      ],
+      "returns": [
+        {
+          "name": "entity",
+          "description": "The player's entity or `nil`.",
+          "type": "entity",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "getId",
+      "description": [
+        "Returns the unique ID for this player (their SteamID 64 on Steamworks-enabled builds of TASBox).",
+        "",
+        "You should use this when determining if two players are the same,",
+        "as the player userdata objects passed to the scripting environment are always a new instance (and thus won't be equal)."
+      ],
+      "parameters": [
+        {
+          "name": "player",
+          "description": "Player to get the ID of.",
+          "type": "Player"
+        }
+      ],
+      "returns": [
+        {
+          "name": "id",
+          "description": "Unique ID of the player.",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "getLocalPlayer",
+      "realms": ["client"],
+      "description": "Gets the local player.",
+      "parameters": [],
+      "returns": [
+        {
+          "name": "player",
+          "description": "Instance of the local player.",
+          "type": "Player"
+        }
+      ]
+    },
+    {
+      "name": "isLocalPlayer",
+      "realms": ["client"],
+      "description": "Returns whether the given player is the local player.",
+      "parameters": [
+        {
+          "name": "player",
+          "description": "Player to check.",
+          "type": "Player"
+        }
+      ],
+      "returns": [
+        {
+          "name": "isLocalPlayer",
+          "description": "True if the player is the local player.",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "kick",
+      "realms": ["server"],
+      "description": "Kicks the player from the server if they were connecting or connected.",
+      "parameters": [
+        {
+          "name": "player",
+          "description": "Player to kick.",
+          "type": "Player"
+        }
+      ],
+      "returns": []
+    }
+  ],
+  "enums": [
+    {
+      "name": "DisconnectReason",
+      "description": "Why the player was disconnected.",
+      "values": [
+        "PlayerDisconnected",
+        "PlayerKicked",
+        "ServerClosed",
+        "ServerRejected",
+        "ServerFull",
+        "ConnectionFailed",
+        "InternalError"
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "connecting",
+      "description": "Fired when a player first starts connecting to the server, but before they've authenticated.",
+      "parameters": [
+        {
+          "name": "player",
+          "description": "The player who started connecting.",
+          "type": "Player"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "connected",
+      "description": "Fired when a player finishes connecting to the server, after they've successfully authenticated.",
+      "parameters": [
+        {
+          "name": "player",
+          "description": "The player who finished connecting.",
+          "type": "Player"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "disconnected",
+      "description": [
+        "Fired when a player disconnects - or is disconnected from - the server.",
+        "",
+        "This includes players who started connecting but didn't finish.",
+        "Don't assume you previously received a `\"connected\"` event for a player",
+        "when you receive a `\"disconnected\"` event for that player!"
+      ],
+      "parameters": [
+        {
+          "name": "player",
+          "description": "The player who disconnected.",
+          "type": "Player"
+        },
+        {
+          "name": "reason",
+          "description": "Why they were disconnected.",
+          "type": "Player.DisconnectReason"
+        }
+      ],
+      "returns": []
+    }
+  ]
+}

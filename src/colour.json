@@ -1,0 +1,169 @@
+{
+  "name": "Colour",
+  "description": "API for creating and manipulating colours.",
+  "functions": [
+    {
+      "name": "create",
+      "description": "Creates a new colour.",
+      "parameters": [
+        {
+          "name": "r",
+          "type": "number",
+          "description": "The red component of the colour."
+        },
+        {
+          "name": "g",
+          "type": "number",
+          "description": "The green component of the colour."
+        },
+        {
+          "name": "b",
+          "type": "number",
+          "description": "The blue component of the colour."
+        },
+        {
+          "name": "a",
+          "type": "number",
+          "optional": true,
+          "defaultValue": 1,
+          "description": "The alpha component of the colour."
+        }
+      ],
+      "returns": [
+        {
+          "name": "colour",
+          "type": "Colour"
+        }
+      ]
+    },
+    {
+      "name": "fromRGB8",
+      "description": "Creates a colour from RGB components in the range 0-255. Alpha is set to 1.",
+      "parameters": [
+        {
+          "name": "r",
+          "type": "number",
+          "description": "The red component of the colour."
+        },
+        {
+          "name": "g",
+          "type": "number",
+          "description": "The green component of the colour."
+        },
+        {
+          "name": "b",
+          "type": "number",
+          "description": "The blue component of the colour."
+        }
+      ],
+      "returns": [
+        {
+          "name": "colour",
+          "type": "Colour"
+        }
+      ]
+    },
+    {
+      "name": "fromRGBA8",
+      "description": "Creates a colour from RGBA components in the range 0-255.",
+      "parameters": [
+        {
+          "name": "r",
+          "type": "number",
+          "description": "The red component of the colour."
+        },
+        {
+          "name": "g",
+          "type": "number",
+          "description": "The green component of the colour."
+        },
+        {
+          "name": "b",
+          "type": "number",
+          "description": "The blue component of the colour."
+        },
+        {
+          "name": "a",
+          "type": "number",
+          "description": "The alpha component of the colour."
+        }
+      ],
+      "returns": [
+        {
+          "name": "colour",
+          "type": "Colour"
+        }
+      ]
+    },
+    {
+      "name": "fromHex",
+      "description": "Creates a colour from a hexadecimal string. Supports `#RGB`, `#RGBA`, `#RRGGBB` and `#RRGGBBAA` formats.",
+      "parameters": [
+        {
+          "name": "hex",
+          "type": "string",
+          "description": "The hexadecimal string."
+        }
+      ],
+      "returns": [
+        {
+          "name": "colour",
+          "type": "Colour",
+          "description": "The new colour."
+        }
+      ]
+    },
+    {
+      "name": "toHex",
+      "description": "Converts a colour to a hexadecimal string.",
+      "parameters": [
+        {
+          "name": "colour",
+          "type": "Colour"
+        },
+        {
+          "name": "withAlpha",
+          "type": "boolean",
+          "optional": true,
+          "defaultValue": true,
+          "description": "Whether to include the alpha component (default `true`)."
+        }
+      ],
+      "returns": [
+        {
+          "name": "hex",
+          "type": "string",
+          "description": "Colour encoded as an `#RRGGBBAA` hex string (or `#RRGGBB` if `withAlpha` is `false`)."
+        }
+      ]
+    }
+  ],
+  "classes": [
+    {
+      "name": "Colour",
+      "description": "RGBA colour stored as an array of four numbers in the 0-1 range (or wider for HDR).",
+      "properties": [
+        {
+          "name": 1,
+          "type": "number",
+          "description": "The red component of the colour."
+        },
+        {
+          "name": 2,
+          "type": "number",
+          "description": "The green component of the colour."
+        },
+        {
+          "name": 3,
+          "type": "number",
+          "description": "The blue component of the colour."
+        },
+        {
+          "name": 4,
+          "type": "number",
+          "description": "The alpha component of the colour."
+        }
+      ]
+    }
+  ]
+}

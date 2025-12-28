@@ -1,0 +1,74 @@
+import _Asset from "./asset.json";
+import _Camera from "./camera.json";
+import _Colour from "./colour.json";
+import _Engine from "./engine.json";
+import _Entity from "./entity.json";
+import _EventDispatcherFunctions from "./event-dispatcher-functions.json";
+import _Filesystem from "./filesystem.json";
+import _Globals from "./globals.json";
+import _Input from "./input.json";
+import _Luau from "./luau.json";
+import _Material from "./material.json";
+import _Menu from "./menu.json";
+import _MoonJuice from "./moon-juice.json";
+import _Physics from "./physics.json";
+import _Player from "./player.json";
+import _Quaternion from "./quaternion.json";
+import _Skeleton from "./skeleton.json";
+import _State from "./state.json";
+import _Timer from "./timer.json";
+import _Ui from "./ui.json";
+
+import { Library } from "./interfaces/library";
+import { FunctionProperty } from "./interfaces/function";
+
+export const asset: Library = _Asset as Library;
+export const camera: Library = _Camera;
+export const colour: Library = _Colour;
+export const engine: Library = _Engine as Library;
+export const entity: Library = _Entity as Library;
+export const eventDispatcherFunctions: FunctionProperty[] = _EventDispatcherFunctions;
+export const filesystem: Library = _Filesystem as Library;
+export const globals: Library = _Globals;
+export const input: Library = _Input as Library;
+export const luau: Library = _Luau as Library;
+export const material: Library = _Material;
+export const menu: Library = _Menu as Library;
+export const moonJuice: Library = _MoonJuice as Library;
+export const physics: Library = _Physics as Library;
+export const player: Library = _Player as Library;
+export const quaternion: Library = _Quaternion as Library;
+export const skeleton: Library = _Skeleton as Library;
+export const state: Library = _State as Library;
+export const timer: Library = _Timer as Library;
+export const ui: Library = _Ui as Library;
+
+export const allLibraries: Library[] = [
+  asset,
+  camera,
+  colour,
+  engine,
+  entity,
+  filesystem,
+  globals,
+  input,
+  luau,
+  material,
+  menu,
+  moonJuice,
+  physics,
+  player,
+  quaternion,
+  skeleton,
+  state,
+  timer,
+  ui,
+];
+
+export type * from "./interfaces/class";
+export type * from "./interfaces/function";
+export type * from "./interfaces/library";
+export type * from "./interfaces/property";
+export type * from "./interfaces/enum";
+export type * from "./interfaces/constant";
+export type * from "./interfaces/realm";

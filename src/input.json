@@ -1,0 +1,374 @@
+{
+  "name": "Input",
+  "realms": ["menu", "client", "server"],
+  "description": [
+    "API for handling user input in a way that's compatible with all supported input devices (keyboards, mice, gamepads, and more!).",
+    "",
+    "Inputs are defined as a set of Actions, collectively called an Action Set.",
+    "Each Action is bound to one or more physical buttons and/or analogue sensors, and carries a semantic meaning that should be adhered to.",
+    "This ensures players are free to configure their inputs how they want, on a range of devices, while still having a consistent experience across games and addons.",
+    "",
+    "Action Sets can be selected on the fly to change how input behaves for players.",
+    "For example, switching to menu navigation when they open chat."
+  ],
+  "functions": [
+    {
+      "name": "switchToBasicActionSet",
+      "realms": ["menu", "client"],
+      "description": [
+        "Switches the active action set to \"Basic\", which should support most 2D and 3D player characters.",
+        "",
+        "If the player is using a mouse, their cursor is locked to the screen when switching to this action set."
+      ],
+      "parameters": [],
+      "returns": []
+    },
+    {
+      "name": "switchToMenuActionSet",
+      "realms": ["menu", "client"],
+      "description": [
+        "Switches the active action set to \"Menu\", enabling the navigation of UIs.",
+        "Pass the optional `MenuType` enum to control which input will trigger the `dismissMenu` action.",
+        "",
+        "If the player is using a mouse, their cursor is unlocked from the screen when switching to this action set."
+      ],
+      "parameters": [
+        {
+          "name": "menu",
+          "description": "The (optional) menu type being switched to.",
+          "type": "MenuType",
+          "optional": true
+        }
+      ],
+      "returns": []
+    }
+  ],
+  "enums": [
+    {
+      "name": "MenuType",
+      "realms": ["menu", "client"],
+      "description": "Menu types which are opened by an action, and should be dismissed by the same action.",
+      "values": ["Main", "Inventory", "Social"]
+    }
+  ],
+  "classes": [
+    {
+      "name": "DigitalAction",
+      "description": [
+        "A digital action, i.e. a button press (but not necessarily bound to a physical button).",
+        "",
+        "Note that none of these properties are mutually exclusive.",
+        "It is valid for a button to be pressed and released during, and held at the end of, a given input sample."
+      ],
+      "properties": [
+        {
+          "name": "wasPressedThisFrame",
+          "type": "boolean",
+          "description": "True if the button transitioned from not pressed to pressed during this input sample"
+        },
+        {
+          "name": "wasReleasedThisFrame",
+          "type": "boolean",
+          "description": "True if the button transitioned from pressed to not pressed during this input sample"
+        },
+        {
+          "name": "isHeld",
+          "type": "boolean",
+          "description": "True if the button was held at the **end** of this input sample"
+        }
+      ]
+    },
+    {
+      "name": "MenuActionSet",
+      "realms": ["menu", "client"],
+      "description": "A collection of actions available when the \"Menu\" action set is active.",
+      "properties": [
+        {
+          "name": "cursor",
+          "type": {
+            "type": "array",
+            "items": "number"
+          },
+          "description": "The delta (in pixels) of the physical or virtual mouse cursor since the last time input was processed."
+        },
+        {
+          "name": "scroll",
+          "type": {
+            "type": "array",
+            "items": "number"
+          },
+          "description": "The delta of the scroll action since the last time input was processed."
+        },
+        {
+          "name": "up",
+          "type": "DigitalAction",
+          "description": "Selects a focusable UI element immediately above the currently focused element"
+        },
+        {
+          "name": "down",
+          "type": "DigitalAction",
+          "description": "Selects a focusable UI element immediately below the currently focused element"
+        },
+        {
+          "name": "left",
+          "type": "DigitalAction",
+          "description": "Selects a focusable UI element immediately left of the currently focused element"
+        },
+        {
+          "name": "right",
+          "type": "DigitalAction",
+          "description": "Selects a focusable UI element immediately right of the currently focused element"
+        },
+        {
+          "name": "previousTab",
+          "type": "DigitalAction",
+          "description": "Selects the previous tab or page in the currently active window or modal"
+        },
+        {
+          "name": "nextTab",
+          "type": "DigitalAction",
+          "description": "Selects the next tab or page in the currently active window or modal"
+        },
+        {
+          "name": "activateCursor",
+          "type": "DigitalAction",
+          "description": "Clicks/presses an interactive UI element underneath the current cursor position"
+        },
+        {
+          "name": "affirm",
+          "type": "DigitalAction",
+          "description": "Affirms confirmation modals or clicks/presses the currently focused element"
+        },
+        {
+          "name": "cancel",
+          "type": "DigitalAction",
+          "description": "Cancels/closes modals or returns to the previous screen"
+        },
+        {
+          "name": "openContextMenu",
+          "type": "DigitalAction",
+          "description": "Opens a context menu or displays more information for the currently hovered/focused UI element"
+        },
+        {
+          "name": "hotkey1",
+          "type": "DigitalAction",
+          "description": "Generic action which can be used by developers for interactions not covered by the above actions"
+        },
+        {
+          "name": "hotkey2",
+          "type": "DigitalAction",
+          "description": "Generic action which can be used by developers for interactions not covered by the above actions"
+        },
+        {
+          "name": "hotkey3",
+          "type": "DigitalAction",
+          "description": "Generic action which can be used by developers for interactions not covered by the above actions"
+        },
+        {
+          "name": "hotkey4",
+          "type": "DigitalAction",
+          "description": "Generic action which can be used by developers for interactions not covered by the above actions"
+        },
+        {
+          "name": "dismissMenu",
+          "type": "DigitalAction",
+          "description": "Dismisses the currently open menu. Bound dynamically depending on the active menu type"
+        }
+      ]
+    },
+    {
+      "name": "BasicActionSet",
+      "description": [
+        "A collection of actions available when the \"Basic\" action set is active.",
+        "",
+        "Useful for generic 2D/3D player character controllers and simple/arcade land, sea and air vehicles."
+      ],
+      "properties": [
+        {
+          "name": "look",
+          "type": {
+            "type": "array",
+            "items": "number"
+          },
+          "description": "Adjusts the player's viewport on two axes"
+        },
+        {
+          "name": "move",
+          "type": {
+            "type": "array",
+            "items": "number"
+          },
+          "description": "Moves the player on two axes. Length is clamped to one, but can be shorter"
+        },
+        {
+          "name": "jump",
+          "type": "DigitalAction",
+          "description": "Causes the player to perform an action they would expect to be bound to their jump button"
+        },
+        {
+          "name": "crouch",
+          "type": "DigitalAction",
+          "description": "Causes the player to perform an action they would expect to be bound to their crouch button"
+        },
+        {
+          "name": "sprint",
+          "type": "DigitalAction",
+          "description": "Causes the player to perform an action they would expect to be bound to their sprint button"
+        },
+        {
+          "name": "primary",
+          "type": "DigitalAction",
+          "description": "Causes the player to perform an action they would expect to be bound to the button usually used for shooting/attacking in FPS/TPS games"
+        },
+        {
+          "name": "secondary",
+          "type": "DigitalAction",
+          "description": "Causes the player to perform an action they would expect to be bound to the button usually used for aiming in FPS/TPS games"
+        },
+        {
+          "name": "previousItem",
+          "type": "DigitalAction",
+          "description": "Selects the previous item/weapon held by the player"
+        },
+        {
+          "name": "nextItem",
+          "type": "DigitalAction",
+          "description": "Selects the next item/weapon held by the player"
+        },
+        {
+          "name": "reload",
+          "type": "DigitalAction",
+          "description": "Causes the player to reload/recharge their item/weapon."
+        },
+        {
+          "name": "interact",
+          "type": "DigitalAction",
+          "description": "Causes the player to interact with the object they're looking at (e.g. entering a vehicle)"
+        },
+        {
+          "name": "openInventory",
+          "type": "DigitalAction",
+          "description": "Opens the player's inventory (if relevant to the type of game or addon you're building)"
+        },
+        {
+          "name": "openMainMenu",
+          "type": "DigitalAction",
+          "description": "Should always open the main in-game menu (usually a pause menu in singleplayer games)"
+        },
+        {
+          "name": "openSocialMenu",
+          "type": "DigitalAction",
+          "description": "Opens a menu used for social features in multiplayer (e.g. chat)"
+        },
+        {
+          "name": "hotkey1",
+          "type": "DigitalAction",
+          "description": "Generic action which can be used by developers for interactions not covered by the above actions"
+        },
+        {
+          "name": "hotkey2",
+          "type": "DigitalAction",
+          "description": "Generic action which can be used by developers for interactions not covered by the above actions"
+        },
+        {
+          "name": "hotkey3",
+          "type": "DigitalAction",
+          "description": "Generic action which can be used by developers for interactions not covered by the above actions"
+        },
+        {
+          "name": "hotkey4",
+          "type": "DigitalAction",
+          "description": "Generic action which can be used by developers for interactions not covered by the above actions"
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "menuActionSet",
+      "realms": ["menu", "client"],
+      "description": [
+        "Fired every time input is processed while the \"Menu\" action set is active.",
+        "",
+        "- In the menu, this is fired **every frame**",
+        "- In games on the client, this is fired **once per server tick** for the local player",
+        "- This action set does not exist on the server"
+      ],
+      "parameters": [
+        {
+          "name": "actions",
+          "description": "A snapshot of the menu actions this frame/tick.",
+          "type": "MenuActionSet"
+        },
+        {
+          "name": "deltaTime",
+          "description": "Seconds passed since the last time input was processed (including for other action sets)",
+          "type": "number"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "basicActionSetPredicted",
+      "realms": ["menu", "client"],
+      "description": [
+        "Fired in the menu and games on the client every time input is processed while the \"Basic\" action set is active.",
+        "",
+        "- In the menu, this is fired **every frame**",
+        "- In games, this is fired **once per server tick** for each player and **when performing local prediction**",
+        "",
+        "On the server, the `\"basicActionSet\"` event is fired instead."
+      ],
+      "parameters": [
+        {
+          "name": "player",
+          "description": "The player these inputs are for.",
+          "type": "Player"
+        },
+        {
+          "name": "actions",
+          "description": "A snapshot of the basic actions this frame/tick.",
+          "type": "BasicActionSet"
+        },
+        {
+          "name": "isFirstTimePredicted",
+          "description": "True if this is the first time we're processing this input",
+          "type": "boolean"
+        },
+        {
+          "name": "deltaTime",
+          "description": "Seconds passed since the last time input was processed (including for other action sets)",
+          "type": "number"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "basicActionSet",
+      "realms": ["server"],
+      "description": [
+        "Fired on the server every time input is processed while the \"Basic\" action set is active.",
+        "",
+        "On the client, the `\"basicActionSetPredicted\"` event is fired instead."
+      ],
+      "parameters": [
+        {
+          "name": "player",
+          "description": "The player these inputs are for.",
+          "type": "Player"
+        },
+        {
+          "name": "actions",
+          "description": "A snapshot of the basic actions this frame/tick.",
+          "type": "BasicActionSet"
+        },
+        {
+          "name": "deltaTime",
+          "description": "Seconds passed since the last time input was processed (including for other action sets)",
+          "type": "number"
+        }
+      ],
+      "returns": []
+    }
+  ]
+}

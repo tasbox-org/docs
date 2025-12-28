@@ -1,0 +1,27 @@
+{
+  "name": "Skeleton",
+  "description": "Library for creating, reading and updating skeletons.",
+  "functions": [
+    {
+      "name": "create",
+      "description": "Creates a new skeleton from a list of bone entities.",
+      "parameters": [
+        {
+          "name": "bones",
+          "description": "List of bone entities.",
+          "type": {
+            "type": "array",
+            "items": "entity"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "name": "skeleton",
+          "description": "The new skeleton.",
+          "type": "Skeleton"
+        }
+      ]
+    }
+  ]
+}

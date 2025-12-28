@@ -1,0 +1,128 @@
+{
+  "name": "Menu",
+  "description": [
+    "Library allowing game developers to implement custom main menus for their games.",
+    "These functions can be used for building game and addon selection UIs, and for loading into a game.",
+    "",
+    "In most cases you won't need to build a game selection UI as the player will have already chosen your game from the engine's launcher menu."
+  ],
+  "functions": [
+    {
+      "name": "listGames",
+      "section": "Games",
+      "description": "Lists all installed games along with their metadata.",
+      "parameters": [],
+      "returns": [
+        {
+          "name": "games",
+          "description": "List of games.",
+          "type": {
+            "type": "array",
+            "items": "PackageMetadata"
+          }
+        }
+      ]
+    },
+    {
+      "name": "selectGame",
+      "section": "Games",
+      "description": "Selects a game by its unique slug, to load when calling `loadGame`.",
+      "parameters": [
+        {
+          "name": "game",
+          "description": "Unique slug of the game to select.",
+          "type": "string"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "deselectGame",
+      "section": "Games",
+      "description": "Deselects the selected game if one is selected.",
+      "parameters": [],
+      "returns": []
+    },
+    {
+      "name": "listAddons",
+      "section": "Addons",
+      "description": "Lists all installed addons along with their metadata.",
+      "parameters": [],
+      "returns": [
+        {
+          "name": "addons",
+          "description": "List of addons.",
+          "type": {
+            "type": "array",
+            "items": "PackageMetadata"
+          }
+        }
+      ]
+    },
+    {
+      "name": "selectAddon",
+      "section": "Addons",
+      "description": "Selects an addon by its unique slug, to load when calling `loadGame`.",
+      "parameters": [
+        {
+          "name": "addon",
+          "description": "Unique slug of the addon to select.",
+          "type": "string"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "deselectAddon",
+      "section": "Addons",
+      "description": "Deselects an addon by its unique slug, to prevent loading when calling `loadGame`.",
+      "parameters": [
+        {
+          "name": "addon",
+          "description": "Unique slug of the addon to deselect.",
+          "type": "string"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "loadGame",
+      "description": "Flags to the engine that the selected game and addons should be loaded at the end of this tick.",
+      "parameters": [],
+      "returns": []
+    }
+  ],
+  "classes": [
+    {
+      "name": "PackageMetadata",
+      "description": "Metadata for a game or addon, collectively referred to as a 'package'.",
+      "properties": [
+        {
+          "name": "folder",
+          "description": "Real system path to the package's contents.",
+          "type": "string"
+        },
+        {
+          "name": "slug",
+          "description": "Unique slug identifying this package.",
+          "type": "string"
+        },
+        {
+          "name": "name",
+          "description": "Display name of the package.",
+          "type": "string"
+        },
+        {
+          "name": "mountPath",
+          "description": "Virtual filesystem path where the content will be mounted.",
+          "type": "string"
+        },
+        {
+          "name": "coverImagePath",
+          "description": "Path to a cover image. If the image can't be found, a suitable placeholder should be used.",
+          "type": "string"
+        }
+      ]
+    }
+  ]
+}

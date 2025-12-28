@@ -1,0 +1,26 @@
+{
+  "name": "@tasbox/docs-json",
+  "version": "1.0.0",
+  "description": "JSON documentation for the TASBox scripting API",
+  "main": "dist/src/index.js",
+  "devDependencies": {
+    "prettier": "^3.7.4",
+    "typescript": "^5.9.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "format": "prettier --check .",
+    "format:write": "prettier --write ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tasbox-org/docs.git"
+  },
+  "author": "TASBox",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tasbox-org/docs/issues"
+  },
+  "homepage": "https://github.com/tasbox-org/docs#readme"
+}

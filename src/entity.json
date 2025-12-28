@@ -1,0 +1,736 @@
+{
+  "name": "Entity",
+  "realms": ["client", "server"],
+  "description": "API for creating and manipulating entities as well as components.",
+  "functions": [
+    {
+      "name": "create",
+      "realms": ["server"],
+      "description": "Creates a new entity.",
+      "parameters": [
+        {
+          "name": "shouldReplicate",
+          "description": "True if the entity should replicate to clients.",
+          "type": "boolean",
+          "optional": true,
+          "defaultValue": false
+        }
+      ],
+      "returns": [
+        {
+          "name": "entity",
+          "description": "The newly created entity.",
+          "type": "entity"
+        }
+      ]
+    },
+    {
+      "name": "create",
+      "realms": ["client"],
+      "description": "Creates a new entity.",
+      "parameters": [],
+      "returns": [
+        {
+          "name": "entity",
+          "description": "The newly created entity.",
+          "type": "entity"
+        }
+      ]
+    },
+    {
+      "name": "fromAsset3d",
+      "description": "Creates a new entity hierarchy from an Asset3d.",
+      "parameters": [
+        {
+          "name": "asset",
+          "description": "An instance of the asset to create from.",
+          "type": "Asset3d"
+        },
+        {
+          "name": "position",
+          "description": "The position of the root entity.",
+          "type": "vector"
+        },
+        {
+          "name": "orientation",
+          "description": "The orientation of the root entity.",
+          "type": "Quaternion"
+        },
+        {
+          "name": "enablePhysics",
+          "description": "Whether to create colliders and constraints from the asset.",
+          "type": "boolean",
+          "optional": true,
+          "defaultValue": true
+        }
+      ],
+      "returns": [
+        {
+          "name": "entity",
+          "description": "The root entity of the new hierarchy.",
+          "type": "entity"
+        }
+      ]
+    },
+    {
+      "name": "fromMap",
+      "description": "Creates entities from a Map.",
+      "parameters": [
+        {
+          "name": "map",
+          "description": "An instance of the map to create from.",
+          "type": "Map"
+        }
+      ],
+      "returns": [
+        {
+          "name": "entities",
+          "description": "List of the entities created",
+          "type": {
+            "type": "array",
+            "items": "entity"
+          }
+        }
+      ]
+    },
+    {
+      "name": "destroy",
+      "description": "Destroys an entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to destroy.",
+          "type": "entity"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "isValid",
+      "description": "Checks if an entity is valid.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to check.",
+          "type": "entity"
+        }
+      ],
+      "returns": [
+        {
+          "name": "valid",
+          "description": "Whether the entity is valid.",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "getId",
+      "description": "Gets the ID of an entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to get the ID of.",
+          "type": "entity"
+        }
+      ],
+      "returns": [
+        {
+          "name": "id",
+          "description": "The ID of the entity.",
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "name": "isReplicated",
+      "description": [
+        "True if the entity is replicated from the server to clients.",
+        "",
+        "Modifications made to replicated entities on the client will be considered predictions,",
+        "and will be overridden when the next update for the entity is sent by the server."
+      ],
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to check.",
+          "type": "entity"
+        }
+      ],
+      "returns": [
+        {
+          "name": "replica",
+          "description": "Whether the entity is replicated.",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "createComponent",
+      "description": [
+        "Creates a new component.",
+        "#### Performance for Component Types",
+        "Primitive component types are the **fastest to create and access**.",
+        "Primitive component types include:",
+        "- `boolean`",
+        "- `integer`",
+        "- `unsigned`",
+        "- `number`",
+        "- `string`",
+        "- `vector`",
+        "- `quaternion`",
+        "",
+        "Reference component types are **slower to create and access**.",
+        "Reference component types include:",
+        "- `table`",
+        "- `buffer`",
+        "- `function`",
+        "- `userdata`",
+        "- `thread`"
+      ],
+      "parameters": [
+        {
+          "name": "type",
+          "description": "The type of component to create.",
+          "type": [
+            "'boolean'",
+            "'integer'",
+            "'unsigned'",
+            "'number'",
+            "'string'",
+            "'vector'",
+            "'quaternion'",
+            "'table'",
+            "'buffer'",
+            "'function'",
+            "'userdata'",
+            "'thread'"
+          ]
+        }
+      ],
+      "returns": [
+        {
+          "name": "component",
+          "description": "The newly created component.",
+          "type": "component"
+        }
+      ]
+    },
+    {
+      "name": "findByComponents",
+      "description": "Finds entities which contain the given components.",
+      "parameters": [
+        {
+          "name": "components",
+          "description": "The components to search for.",
+          "type": {
+            "type": "array",
+            "items": "component"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "name": "entities",
+          "description": "The entities which contain the given components.",
+          "type": {
+            "type": "array",
+            "items": "entity"
+          }
+        }
+      ]
+    },
+    {
+      "name": "getComponent",
+      "description": "Gets a component from an entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to get the component from.",
+          "type": "entity"
+        },
+        {
+          "name": "component",
+          "description": "The component to get.",
+          "type": "component"
+        }
+      ],
+      "returns": [
+        {
+          "name": "data",
+          "description": "The component data from the entity.",
+          "type": "any"
+        }
+      ]
+    },
+    {
+      "name": "setComponent",
+      "description": "Sets component data on an entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to set the component on.",
+          "type": "entity"
+        },
+        {
+          "name": "component",
+          "description": "The component to set.",
+          "type": "component"
+        },
+        {
+          "name": "data",
+          "description": "The data to set.",
+          "type": "any"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "removeComponent",
+      "description": "Removes a component from an entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to remove the component from.",
+          "type": "entity"
+        },
+        {
+          "name": "component",
+          "description": "The component to remove.",
+          "type": "component"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "hasComponent",
+      "description": "Checks if an entity has a component.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to check.",
+          "type": "entity"
+        },
+        {
+          "name": "component",
+          "description": "The component to check for.",
+          "type": "component"
+        }
+      ],
+      "returns": [
+        {
+          "name": "hasComponent",
+          "description": "Whether the entity has the component.",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "getParent",
+      "description": "Gets the parent of an entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to get the parent of.",
+          "type": "entity"
+        }
+      ],
+      "returns": [
+        {
+          "name": "parent",
+          "description": "The parent of the entity.",
+          "type": "entity",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "getChildren",
+      "description": "Gets the children of an entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to get the children of.",
+          "type": "entity"
+        }
+      ],
+      "returns": [
+        {
+          "name": "children",
+          "description": "The children of the entity.",
+          "type": {
+            "type": "array",
+            "items": "entity"
+          }
+        }
+      ]
+    },
+    {
+      "name": "setParent",
+      "description": "Sets the parent of an entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to set the parent of.",
+          "type": "entity"
+        },
+        {
+          "name": "parent",
+          "description": "The new parent, or nil to remove the entity's parent.",
+          "type": "entity",
+          "optional": true
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "getCachedGlobalTransform",
+      "description": [
+        "Gets the cached global transform of an entity.",
+        "",
+        "Global transforms are recalculated from entity local transforms once per frame, after Lua executes and before rendering.",
+        "This means transforms returned by this method may be out of sync from the local transform of the entity or its ancestors.",
+        "You can force an immediate recalculation of an entity's global transform **and those of all its ancestors** with `calculateGlobalTransform`,",
+        "but beware this isn't cheap if the entity is a deeply nested descendant."
+      ],
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to get the global transform of.",
+          "type": "entity"
+        }
+      ],
+      "returns": [
+        {
+          "name": "transform",
+          "description": "The cached global transform of the entity.",
+          "type": "Transform"
+        }
+      ]
+    },
+    {
+      "name": "calculateGlobalTransform",
+      "description": [
+        "Immediately recalculates the global transforms of an entity and all of its ancestors.",
+        "",
+        "Global transforms are recalculated from entity local transforms once per frame, after Lua executes and before rendering.",
+        "This means transforms returned by `getCachedGlobalTransform` may be out of sync from the local transform of the entity or its ancestors.",
+        "You can force an immediate recalculation of an entity's global transform **and those of all its ancestors** with this method,",
+        "but beware this isn't cheap if the entity is a deeply nested descendant.",
+        "",
+        "You should use `getCachedGlobalTransform` where possible."
+      ],
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to calculate the global transform of.",
+          "type": "entity"
+        }
+      ],
+      "returns": [
+        {
+          "name": "transform",
+          "description": "The up-to-date global transform of the entity.",
+          "type": "Transform"
+        }
+      ]
+    },
+    {
+      "name": "getLocalPosition",
+      "description": "Gets the local position of an entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to get the local position of.",
+          "type": "entity"
+        }
+      ],
+      "returns": [
+        {
+          "name": "position",
+          "description": "The local position of the entity.",
+          "type": "vector"
+        }
+      ]
+    },
+    {
+      "name": "getLocalOrientation",
+      "description": "Gets the local orientation of an entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to get the local orientation of.",
+          "type": "entity"
+        }
+      ],
+      "returns": [
+        {
+          "name": "rotation",
+          "description": "The local orientation of the entity.",
+          "type": "Quaternion"
+        }
+      ]
+    },
+    {
+      "name": "getLocalScale",
+      "description": "Gets the local scale of an entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to get the local scale of.",
+          "type": "entity"
+        }
+      ],
+      "returns": [
+        {
+          "name": "scale",
+          "description": "The local scale of the entity.",
+          "type": "vector"
+        }
+      ]
+    },
+    {
+      "name": "setLocalPosition",
+      "description": "Sets the local position of an entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to set the local position of.",
+          "type": "entity"
+        },
+        {
+          "name": "position",
+          "description": "The local position to set.",
+          "type": "vector"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "setLocalOrientation",
+      "description": "Sets the local orientation of an entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to set the local orientation of.",
+          "type": "entity"
+        },
+        {
+          "name": "orientation",
+          "description": "The local orientation to set.",
+          "type": "Quaternion"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "setLocalScale",
+      "description": "Sets the local scale of an entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to set the local scale of.",
+          "type": "entity"
+        },
+        {
+          "name": "scale",
+          "description": "The local scale to set.",
+          "type": "vector"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "getMesh",
+      "description": "Gets the mesh of an entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to get the mesh of.",
+          "type": "entity"
+        }
+      ],
+      "returns": [
+        {
+          "name": "mesh",
+          "description": "Mesh of the entity, or `nil` if it has none.",
+          "type": "Mesh",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "setMesh",
+      "description": "Sets the mesh of an entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to set the mesh of.",
+          "type": "entity"
+        },
+        {
+          "name": "mesh",
+          "description": "Mesh to set, or `nil` to remove the entity's mesh.",
+          "type": "Mesh",
+          "optional": true
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "getSkeleton",
+      "description": "Gets the skeleton of an entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to get the skeleton of.",
+          "type": "entity"
+        }
+      ],
+      "returns": [
+        {
+          "name": "skeleton",
+          "description": "Skeleton of the entity, or `nil` if it has none.",
+          "type": "Skeleton",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "setSkeleton",
+      "description": "Sets the skeleton of an entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to set the skeleton of.",
+          "type": "entity"
+        },
+        {
+          "name": "skeleton",
+          "description": "Skeleton to set, or `nil` to remove the entity's skeleton.",
+          "type": "Skeleton",
+          "optional": true
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "getMaterialSlotCount",
+      "description": "Gets the number of material slots in the entity's mesh. Returns `0` if the entity has no mesh.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "Entity to get the slot count of.",
+          "type": "entity"
+        }
+      ],
+      "returns": [
+        {
+          "name": "slotCount",
+          "description": "Number of material slots available.",
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "name": "getMaterial",
+      "description": "Gets the material of an entity. Use `getMaterialSlotCount` to check how many material slots are available.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to get the material of.",
+          "type": "entity"
+        },
+        {
+          "name": "slot",
+          "description": "The 1-indexed material slot to read from.",
+          "type": "number"
+        }
+      ],
+      "returns": [
+        {
+          "name": "material",
+          "description": "Material of the entity in the given slot.",
+          "type": "Material"
+        }
+      ]
+    },
+    {
+      "name": "setMaterial",
+      "description": "Sets the material of an entity. Use `getMaterialSlotCount` to check how many material slots are available.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to set the material of.",
+          "type": "entity"
+        },
+        {
+          "name": "slot",
+          "description": "The 1-indexed material slot to write to.",
+          "type": "number"
+        },
+        {
+          "name": "material",
+          "description": "Material to set.",
+          "type": "Material"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "getName",
+      "description": "Gets the name of an entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to get the name of.",
+          "type": "entity"
+        }
+      ],
+      "returns": [
+        {
+          "name": "name",
+          "description": "The name of the entity.",
+          "type": "string",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "setName",
+      "description": "Sets the name of an entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "description": "The entity to set the name of.",
+          "type": "entity"
+        },
+        {
+          "name": "name",
+          "description": "The name to set.",
+          "type": "string"
+        }
+      ],
+      "returns": []
+    }
+  ],
+  "classes": [
+    {
+      "name": "Transform",
+      "description": "Position, orientation and scale.",
+      "properties": [
+        {
+          "name": "position",
+          "type": "vector"
+        },
+        {
+          "name": "orientation",
+          "type": "Quaternion"
+        },
+        {
+          "name": "scale",
+          "type": "vector"
+        }
+      ]
+    }
+  ]
+}

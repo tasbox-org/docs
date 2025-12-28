@@ -1,0 +1,71 @@
+{
+  "name": "Timer",
+  "description": "API for creating and managing timers.",
+  "functions": [
+    {
+      "name": "setInterval",
+      "description": "Creates a timer which calls the function continuously with the given delay.",
+      "parameters": [
+        {
+          "name": "duration",
+          "type": "number",
+          "description": "The time between function calls (in seconds)."
+        },
+        {
+          "name": "callback",
+          "type": {
+            "type": "function",
+            "parameters": [],
+            "returns": []
+          },
+          "description": "The function to call at each interval."
+        }
+      ],
+      "returns": [
+        {
+          "name": "id",
+          "type": "number",
+          "description": "The ID of the timer."
+        }
+      ]
+    },
+    {
+      "name": "setTimeout",
+      "description": "Creates a timer which calls the function once after the given delay.",
+      "parameters": [
+        {
+          "name": "duration",
+          "type": "number",
+          "description": "The delay before calling the function (in seconds)."
+        },
+        {
+          "name": "callback",
+          "type": {
+            "type": "function",
+            "parameters": [],
+            "returns": []
+          },
+          "description": "The function to call after the timeout."
+        }
+      ],
+      "returns": [
+        {
+          "name": "id",
+          "type": "number",
+          "description": "The ID of the timer."
+        }
+      ]
+    },
+    {
+      "name": "clear",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "number",
+          "description": "The ID of the timer to clear."
+        }
+      ],
+      "returns": []
+    }
+  ]
+}

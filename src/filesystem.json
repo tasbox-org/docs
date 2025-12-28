@@ -1,0 +1,106 @@
+{
+  "name": "Filesystem",
+  "description": "API for filesystem-related functions.",
+  "functions": [
+    {
+      "name": "toAbsolutePath",
+      "description": "Converts a relative path to an absolute path.",
+      "parameters": [
+        {
+          "name": "path",
+          "description": "The path to convert.",
+          "type": "string"
+        },
+        {
+          "name": "base",
+          "description": "The base path to use.",
+          "type": "string",
+          "optional": true
+        }
+      ],
+      "returns": [
+        {
+          "name": "absolutePath",
+          "description": "The absolute path.",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "readFile",
+      "description": "Reads a file.",
+      "parameters": [
+        {
+          "name": "relativePath",
+          "description": "The relative path to the file.",
+          "type": "string"
+        }
+      ],
+      "returns": [
+        {
+          "name": "contents",
+          "description": "The contents of the file.",
+          "type": "buffer"
+        }
+      ]
+    },
+    {
+      "name": "fileExists",
+      "description": "Checks if a file exists.",
+      "parameters": [
+        {
+          "name": "path",
+          "description": "The path to the file relative to the script directory.",
+          "type": "string"
+        }
+      ],
+      "returns": [
+        {
+          "name": "exists",
+          "description": "True if the file exists, false otherwise.",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "list",
+      "description": "Returns the files and folders present in the given directory.",
+      "parameters": [
+        {
+          "name": "path",
+          "description": "Path to the directory to list relative to the script directory.",
+          "type": "string"
+        }
+      ],
+      "returns": [
+        {
+          "name": "contents",
+          "descriptions": "Contents of the directory. Will be empty when the path doesn't exist.",
+          "type": "DirectoryContents"
+        }
+      ]
+    }
+  ],
+  "classes": [
+    {
+      "name": "DirectoryContents",
+      "description": "List of file and subfolder names in a directory",
+      "properties": [
+        {
+          "name": "directories",
+          "type": {
+            "type": "array",
+            "items": "string"
+          }
+        },
+        {
+          "name": "files",
+          "type": {
+            "type": "array",
+            "items": "string"
+          }
+        }
+      ]
+    }
+  ]
+}
