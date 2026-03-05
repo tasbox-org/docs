@@ -1,7 +1,7 @@
 {
   "name": "@tasbox-org/docs",
   "author": "TASBox",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "description": "JSON documentation for the TASBox scripting API",
   "main": "dist/index.js",
@@ -23,9 +23,6 @@
     "url": "https://github.com/tasbox-org/docs/issues"
   },
   "homepage": "https://github.com/tasbox-org/docs#readme",
-  "publishConfig": {
-    "@tasbox-org:registry": "https://npm.pkg.github.com"
-  },
   "devDependencies": {
     "prettier": "^3.7.4",
     "typescript": "^5.9.3"
