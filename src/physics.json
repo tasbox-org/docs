@@ -1081,14 +1081,14 @@
       ],
       "parameters": [
         {
-          "name": "entity",
-          "description": "Entity to attach to.",
-          "type": "entity"
-        },
-        {
           "name": "collider",
           "description": "Collider to attach.",
           "type": "Collider"
+        },
+        {
+          "name": "entity",
+          "description": "Entity to attach to.",
+          "type": "entity"
         }
       ],
       "returns": []
@@ -1150,6 +1150,138 @@
           "optional": true
         }
       ]
+    },
+    {
+      "name": "getLocalPosition",
+      "section": "Colliders",
+      "description": "Gets the local position of the collider when attached to a rigid-body.",
+      "parameters": [
+        {
+          "name": "collider",
+          "type": "Collider"
+        }
+      ],
+      "returns": [
+        {
+          "name": "position",
+          "type": "vector"
+        }
+      ]
+    },
+    {
+      "name": "setLocalPosition",
+      "section": "Colliders",
+      "description": "Sets the local position of the collider when attached to a rigid-body.",
+      "parameters": [
+        {
+          "name": "collider",
+          "type": "Collider"
+        },
+        {
+          "name": "position",
+          "type": "vector"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "getLocalOrientation",
+      "section": "Colliders",
+      "description": "Gets the local orientation of the collider when attached to a rigid-body.",
+      "parameters": [
+        {
+          "name": "collider",
+          "type": "Collider"
+        }
+      ],
+      "returns": [
+        {
+          "name": "orientation",
+          "type": "Quaternion"
+        }
+      ]
+    },
+    {
+      "name": "setLocalOrientation",
+      "section": "Colliders",
+      "description": "Sets the local orientation of the collider when attached to a rigid-body.",
+      "parameters": [
+        {
+          "name": "collider",
+          "type": "Collider"
+        },
+        {
+          "name": "orientation",
+          "type": "Quaternion"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "getSimulationEnabled",
+      "section": "Colliders",
+      "description": "Returns whether the collider participates in the physics simulation.",
+      "parameters": [
+        {
+          "name": "collider",
+          "type": "Collider"
+        }
+      ],
+      "returns": [
+        {
+          "name": "enabled",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "setSimulationEnabled",
+      "section": "Colliders",
+      "description": "Sets whether the collider participates in the physics simulation.",
+      "parameters": [
+        {
+          "name": "collider",
+          "type": "Collider"
+        },
+        {
+          "name": "enabled",
+          "type": "boolean"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "getSceneQueriesEnabled",
+      "section": "Colliders",
+      "description": "Returns whether the collider participates in scene queries (ray-casts, sweeps and overlap tests).",
+      "parameters": [
+        {
+          "name": "collider",
+          "type": "Collider"
+        }
+      ],
+      "returns": [
+        {
+          "name": "enabled",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "setSceneQueriesEnabled",
+      "section": "Colliders",
+      "description": "Sets whether the collider participates in scene queries (ray-casts, sweeps and overlap tests).",
+      "parameters": [
+        {
+          "name": "collider",
+          "type": "Collider"
+        },
+        {
+          "name": "enabled",
+          "type": "boolean"
+        }
+      ],
+      "returns": []
     },
     {
       "name": "createController",
@@ -1502,6 +1634,29 @@
       ]
     },
     {
+      "name": "setSceneQueryResponse",
+      "section": "Scene Queries",
+      "description": "Sets the response for this collider on a given scene query channel.",
+      "parameters": [
+        {
+          "name": "collider",
+          "description": "The collider to modify.",
+          "type": "Collider"
+        },
+        {
+          "name": "channel",
+          "description": "The channel to set the response of.",
+          "type": "Physics.SceneQueryChannel"
+        },
+        {
+          "name": "response",
+          "description": "The response to scene queries on this channel.",
+          "type": "Physics.SceneQueryResponse"
+        }
+      ],
+      "returns": []
+    },
+    {
       "name": "raycast",
       "section": "Scene Queries",
       "description": "Traces a ray along a given direction up to an (optional) max distance.",
@@ -1845,14 +2000,21 @@
           "defaultValue": false
         },
         {
-          "name": "mask",
-          "description": "Four 2-byte bitwise filter masks following the [PhysX convention](https://nvidia-omniverse.github.io/PhysX/physx/5.4.2/docs/SceneQueries.html#pxfilterdata-fixed-function-filtering).",
+          "name": "channel",
+          "description": "Which channel should this query intersect with.",
+          "type": "Physics.SceneQueryChannel",
+          "optional": true,
+          "defaultValue": "Physics.SceneQueryChannel.Solid"
+        },
+        {
+          "name": "excludedColliders",
+          "description": "List of colliders to exclude from blocking and touching hits.",
           "type": {
             "type": "array",
-            "items": "number"
+            "items": "Collider"
           },
           "optional": true,
-          "defaultValue": "{ 0, 0, 0, 0 }"
+          "defaultValue": "{}"
         }
       ]
     },
@@ -1941,14 +2103,21 @@
           "defaultValue": true
         },
         {
-          "name": "mask",
-          "description": "Four 2-byte bitwise filter masks following the [PhysX convention](https://nvidia-omniverse.github.io/PhysX/physx/5.4.2/docs/SceneQueries.html#pxfilterdata-fixed-function-filtering).",
+          "name": "channel",
+          "description": "Which channel should this query intersect with.",
+          "type": "Physics.SceneQueryChannel",
+          "optional": true,
+          "defaultValue": "Physics.SceneQueryChannel.Solid"
+        },
+        {
+          "name": "excludedColliders",
+          "description": "List of colliders to exclude from overlaps.",
           "type": {
             "type": "array",
-            "items": "number"
+            "items": "Collider"
           },
           "optional": true,
-          "defaultValue": "{ 0, 0, 0, 0 }"
+          "defaultValue": "{}"
         }
       ]
     }
@@ -1988,6 +2157,23 @@
       "name": "DegreeOfFreedom",
       "description": "Degrees of freedom along or about which a joint can move.",
       "values": ["LinearX", "LinearY", "LinearZ", "AngularX", "AngularY", "AngularZ"]
+    },
+    {
+      "name": "SceneQueryChannel",
+      "description": [
+        "Channels which can be used to filter scene query hits, each with its own semantic meaning.",
+        "Colliders can be configured to generate blocking or touching hits for each channel, or even to discard the hit entirely.",
+        "",
+        "You should aim to follow the semantic meanings of the channels where possible, e.g. by using Bullet for raycast weapons",
+        "and then configuring the colliders for any glass panes to only generate touching hits on that channel.",
+        "This ensures as much interoperability as possible between various assets, games and addons."
+      ],
+      "values": ["Solid", "Visibility", "Camera", "Player", "Bullet"]
+    },
+    {
+      "name": "SceneQueryResponse",
+      "description": "Controls how colliders should respond to scene queries.",
+      "values": ["Ignore", "Touch", "Block"]
     }
   ],
   "events": [

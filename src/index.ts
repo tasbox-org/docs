@@ -3,10 +3,12 @@ import _Camera from "./camera.json";
 import _Colour from "./colour.json";
 import _Engine from "./engine.json";
 import _Entity from "./entity.json";
+import _Event from "./event.json";
 import _EventDispatcherFunctions from "./event-dispatcher-functions.json";
 import _Filesystem from "./filesystem.json";
 import _Globals from "./globals.json";
 import _Input from "./input.json";
+import _Keyboard from "./keyboard.json";
 import _Luau from "./luau.json";
 import _Material from "./material.json";
 import _Menu from "./menu.json";
@@ -18,6 +20,8 @@ import _Skeleton from "./skeleton.json";
 import _State from "./state.json";
 import _Timer from "./timer.json";
 import _Ui from "./ui.json";
+import _Network from "./network.json";
+import _Serialiser from "./serialiser.json";
 
 import { Library } from "./interfaces/library";
 import { FunctionProperty } from "./interfaces/function";
@@ -27,10 +31,12 @@ export const camera: Library = _Camera;
 export const colour: Library = _Colour;
 export const engine: Library = _Engine as Library;
 export const entity: Library = _Entity as Library;
+export const event: Library = _Event as Library;
 export const eventDispatcherFunctions: FunctionProperty[] = _EventDispatcherFunctions;
 export const filesystem: Library = _Filesystem as Library;
 export const globals: Library = _Globals;
 export const input: Library = _Input as Library;
+export const keyboard: Library = _Keyboard as Library;
 export const luau: Library = _Luau as Library;
 export const material: Library = _Material;
 export const menu: Library = _Menu as Library;
@@ -42,6 +48,8 @@ export const skeleton: Library = _Skeleton as Library;
 export const state: Library = _State as Library;
 export const timer: Library = _Timer as Library;
 export const ui: Library = _Ui as Library;
+export const network: Library = _Network as Library;
+export const serialiser: Library = _Serialiser as Library;
 
 export const allLibraries: Library[] = [
   asset,
@@ -49,9 +57,11 @@ export const allLibraries: Library[] = [
   colour,
   engine,
   entity,
+  event,
   filesystem,
   globals,
   input,
+  keyboard,
   luau,
   material,
   menu,
@@ -63,6 +73,8 @@ export const allLibraries: Library[] = [
   state,
   timer,
   ui,
+  network,
+  serialiser,
 ];
 
 export type * from "./interfaces/class";

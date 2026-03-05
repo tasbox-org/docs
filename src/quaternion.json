@@ -156,6 +156,50 @@
           "description": "The product of the two quaternions."
         }
       ]
+    },
+    {
+      "name": "normalise",
+      "description": "Returns a normalised copy of the quaternion.",
+      "parameters": [
+        {
+          "name": "quaternion",
+          "type": "Quaternion",
+          "description": "Quaternion to normalise."
+        }
+      ],
+      "returns": [
+        {
+          "name": "normalisedQuaternion",
+          "type": "Quaternion",
+          "description": "Copy of the quaternion with unit length."
+        }
+      ]
+    },
+    {
+      "name": "getRotationBetween",
+      "description": [
+        "Returns a quaternion which will rotate the first direction to the second along the shortest path.",
+        "May introduce unwanted roll."
+      ],
+      "parameters": [
+        {
+          "name": "startDirection",
+          "type": "vector",
+          "description": "Start direction of the rotation."
+        },
+        {
+          "name": "endDirection",
+          "type": "vector",
+          "description": "End direction of the rotation."
+        }
+      ],
+      "returns": [
+        {
+          "name": "rotation",
+          "type": "Quaternion",
+          "description": "Rotation from start to end."
+        }
+      ]
     }
   ],
   "constants": [

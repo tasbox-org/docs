@@ -1,0 +1,144 @@
+{
+  "name": "Event",
+  "realms": ["menu", "client", "server"],
+  "description": [
+    "API for creating event dispatchers, binding listeners to those dispatchers,",
+    "and dispatching events to those bound listeners.",
+    "",
+    "It's safe to expose this API to addons, but you should avoid exposing the dispatcher objects themselves.",
+    "The dispatcher is a regular table containing all bound event listeners,",
+    "and while the structure of that table (i.e. the supported events) is immutable,",
+    "the individual lists of callbacks for each event are not!",
+    "",
+    "Instead, you should create wrappers for adding and removing listeners. For example:",
+    "",
+    "```moonjuice",
+    "def addEventListenerForAddons = fn(eventName, arg1, arg2)",
+    "  return Event.addListener(myDispatcher, eventName, arg1, arg2)",
+    "end",
+    "```"
+  ],
+  "functions": [
+    {
+      "name": "createDispatcher",
+      "description": [
+        "Creates a new dispatcher with the given supported events.",
+        "Calling any of the functions taking a dispatcher and event name will raise an error",
+        "if the given event is not in this list."
+      ],
+      "parameters": [
+        {
+          "name": "eventNames",
+          "description": "List of supported event names.",
+          "type": {
+            "type": "array",
+            "items": "string"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "name": "dispatcher",
+          "type": "Dispatcher"
+        }
+      ]
+    },
+    {
+      "name": "dispatch",
+      "description": "Dispatch the given event to all listeners bound to it.",
+      "parameters": [
+        {
+          "name": "dispatcher",
+          "description": "Dispatcher to trigger the event on.",
+          "type": "Dispatcher"
+        },
+        {
+          "name": "eventName",
+          "description": "Event to dispatch. Must be supported by the dispatcher.",
+          "type": "string"
+        },
+        {
+          "name": "...",
+          "description": "Any additional arguments to pass to the listeners.",
+          "type": "...any"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "addListener",
+      "description": "Bind a callback to listen to a dispatcher's event.",
+      "parameters": [
+        {
+          "name": "dispatcher",
+          "description": "Dispatcher to listen to.",
+          "type": "Dispatcher"
+        },
+        {
+          "name": "eventName",
+          "description": "Event to listen to. Must be supported by the dispatcher.",
+          "type": "string"
+        },
+        {
+          "name": "callback",
+          "description": "Called when the event is fired with arguments passed by `Event.dispatch`.",
+          "type": {
+            "type": "function",
+            "parameters": [
+              {
+                "name": "...",
+                "type": "...any"
+              }
+            ],
+            "returns": []
+          }
+        }
+      ],
+      "returns": [
+        {
+          "name": "callback",
+          "description": "Callback function that was passed in (for convenience to remove the listener later)",
+          "type": "function"
+        }
+      ]
+    },
+    {
+      "name": "removeListener",
+      "description": "Remove a callback that was bound to a dispatcher's event.",
+      "parameters": [
+        {
+          "name": "dispatcher",
+          "description": "Dispatcher to remove the listener from.",
+          "type": "Dispatcher"
+        },
+        {
+          "name": "eventName",
+          "description": "Event to remove the listener from. Must be supported by the dispatcher.",
+          "type": "string"
+        },
+        {
+          "name": "callback",
+          "description": "Callback to remove.",
+          "type": "function"
+        }
+      ],
+      "returns": []
+    }
+  ],
+  "classes": [
+    {
+      "name": "Dispatcher",
+      "description": [
+        "Table containing all event listeners bound to the dispatcher.",
+        "Note that the dispatcher itself is immutable, however the lists of callbacks on each event name are not."
+      ],
+      "properties": [
+        {
+          "name": "listeners",
+          "description": "Arrays of callbacks keyed off of the event names supported by the dispatcher.",
+          "type": "table"
+        }
+      ]
+    }
+  ]
+}

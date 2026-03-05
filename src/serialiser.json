@@ -1,0 +1,466 @@
+{
+  "name": "Serialiser",
+  "realms": ["client", "server"],
+  "description": [
+    "API for serialising and deserialising schema-based data structures to and from Luau buffers.",
+    "",
+    "Given a schema definition, the Serialiser API can automatically pack data structures into a compact binary format suitable for network transmission or storage, and unpack them back into usable data structures.",
+    "",
+    "The API will error on any of the functions if the provided schema configuration is invalid, or if the data provided does not conform to the schema."
+  ],
+  "functions": [
+    {
+      "name": "writeInPlace",
+      "description": [
+        "Writes data into a buffer using the provided schema.",
+        "",
+        "To determine the size of the buffer needed, you can use the `Serialiser.measure` function before calling this one."
+      ],
+      "parameters": [
+        {
+          "name": "buffer",
+          "type": "buffer",
+          "description": "The buffer to write the data into."
+        },
+        {
+          "name": "schema",
+          "type": "Schema",
+          "description": "The schema defining the structure of the data."
+        },
+        {
+          "name": "data",
+          "type": "any",
+          "description": "The data to be serialised according to the schema."
+        },
+        {
+          "name": "bitOffset",
+          "type": "number",
+          "optional": true,
+          "defaultValue": 0,
+          "description": "The bit offset in the buffer to start writing at."
+        }
+      ],
+      "returns": [
+        {
+          "name": "newBitOffset",
+          "type": "number",
+          "description": "The new bit offset in the buffer after writing the data."
+        }
+      ]
+    },
+    {
+      "name": "write",
+      "description": "Writes data into a new buffer using the provided schema and returns the buffer.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "any",
+          "description": "The data to be serialised according to the schema."
+        },
+        {
+          "name": "schema",
+          "type": "Schema",
+          "description": "The schema defining the structure of the data."
+        }
+      ],
+      "returns": [
+        {
+          "name": "buffer",
+          "type": "buffer",
+          "description": "The buffer containing the serialised data."
+        }
+      ]
+    },
+    {
+      "name": "read",
+      "description": "Reads data from a buffer according to the given schema.",
+      "parameters": [
+        {
+          "name": "buffer",
+          "type": "buffer",
+          "description": "The buffer to read the data from."
+        },
+        {
+          "name": "schema",
+          "type": "Schema",
+          "description": "The schema defining the structure of the data."
+        },
+        {
+          "name": "bitOffset",
+          "type": "number",
+          "optional": true,
+          "defaultValue": 0,
+          "description": "The bit offset in the buffer to start reading from."
+        }
+      ],
+      "returns": [
+        {
+          "name": "data",
+          "type": "any",
+          "description": "The data read from the buffer."
+        }
+      ]
+    },
+    {
+      "name": "measure",
+      "description": [
+        "Measures the number of bits and bytes required to serialise the data using the provided schema.",
+        "",
+        "Useful for determining the size of the buffer needed before performing the actual serialisation with `Serialiser.write`.",
+        "",
+        "Changing `bitOffset` can also affect the measurement, as some schema types add padding to align to the nearest byte."
+      ],
+      "parameters": [
+        {
+          "name": "data",
+          "type": "any",
+          "description": "The data to be measured."
+        },
+        {
+          "name": "schema",
+          "type": "Schema",
+          "description": "The schema defining the structure of the data."
+        },
+        {
+          "name": "bitOffset",
+          "type": "number",
+          "optional": true,
+          "defaultValue": 0,
+          "description": "The bit offset to start measuring from."
+        }
+      ],
+      "returns": [
+        {
+          "name": "bitsNeeded",
+          "type": "number",
+          "description": "The number of bits needed to serialise the data."
+        },
+        {
+          "name": "bytesNeeded",
+          "type": "number",
+          "description": "The number of bytes needed to serialise the data."
+        }
+      ]
+    },
+    {
+      "name": "int",
+      "description": [
+        "Creates an integer schema with optional min and max values.",
+        "The range between min and max defines the number of bits needed to serialise the integer."
+      ],
+      "parameters": [
+        {
+          "name": "config",
+          "type": "IntSchemaConfig",
+          "optional": true,
+          "description": "The configuration for the integer schema."
+        }
+      ],
+      "returns": [
+        {
+          "name": "schema",
+          "type": "Schema",
+          "description": "The integer schema."
+        }
+      ]
+    },
+    {
+      "name": "bool",
+      "description": "Creates a boolean schema.",
+      "parameters": [],
+      "returns": [
+        {
+          "name": "schema",
+          "type": "Schema",
+          "description": "The boolean schema."
+        }
+      ]
+    },
+    {
+      "name": "string",
+      "description": "Creates a string schema with an optional maximum length.",
+      "parameters": [
+        {
+          "name": "config",
+          "type": "StringSchemaConfig",
+          "optional": true,
+          "description": "The configuration for the string schema."
+        }
+      ],
+      "returns": [
+        {
+          "name": "schema",
+          "type": "Schema",
+          "description": "The string schema."
+        }
+      ]
+    },
+    {
+      "name": "float",
+      "description": [
+        "Creates a 32-bit floating-point number schema.",
+        "",
+        "Float serialisation uses IEEE 754 format and requires byte-alignment (padding bits are automatically added if necessary)."
+      ],
+      "parameters": [],
+      "returns": [
+        {
+          "name": "schema",
+          "type": "Schema",
+          "description": "The float schema."
+        }
+      ]
+    },
+    {
+      "name": "double",
+      "description": [
+        "Creates a 64-bit floating-point number schema.",
+        "",
+        "Double serialisation uses IEEE 754 format and requires byte-alignment (padding bits are automatically added if necessary)."
+      ],
+      "parameters": [],
+      "returns": [
+        {
+          "name": "schema",
+          "type": "Schema",
+          "description": "The double schema."
+        }
+      ]
+    },
+    {
+      "name": "quantizedFloat",
+      "description": [
+        "Creates a quantized floating-point number schema.",
+        "",
+        "Quantized floats map a continuous range to discrete integer steps,",
+        "providing a space-efficient way to represent floating-point values with controlled precision.",
+        "This is useful for network transmission where exact float precision is not required."
+      ],
+      "parameters": [
+        {
+          "name": "config",
+          "type": "QuantizedFloatSchemaConfig",
+          "description": "The configuration for the quantized float schema."
+        }
+      ],
+      "returns": [
+        {
+          "name": "schema",
+          "type": "Schema",
+          "description": "The quantized float schema."
+        }
+      ]
+    },
+    {
+      "name": "vector3",
+      "description": "Creates a Vector3 schema with configurable component serialisation.",
+      "parameters": [
+        {
+          "name": "config",
+          "type": "Vector3SchemaConfig",
+          "optional": true,
+          "description": "The configuration for the Vector3 schema."
+        }
+      ],
+      "returns": [
+        {
+          "name": "schema",
+          "type": "Schema",
+          "description": "The Vector3 schema."
+        }
+      ]
+    },
+    {
+      "name": "array",
+      "description": [
+        "Creates an array schema with either a maximum variable length (given by `config.maxLength`) or a fixed length (given by `config.fixedLength`).",
+        "You must specify either `maxLength` or `fixedLength`, but not both.",
+        "",
+        "Variable-length arrays require a few more bits to store the length, but allow for any number of elements up to the max."
+      ],
+      "parameters": [
+        {
+          "name": "config",
+          "type": "ArraySchemaConfig",
+          "description": "The configuration for the array schema."
+        }
+      ],
+      "returns": [
+        {
+          "name": "schema",
+          "type": "Schema",
+          "description": "The array schema."
+        }
+      ]
+    },
+    {
+      "name": "table",
+      "description": ["Creates an empty table schema.", "", "Use `Serialiser.withField` to add fields to the table."],
+      "parameters": [],
+      "returns": [
+        {
+          "name": "schema",
+          "type": "Schema",
+          "description": "The table schema."
+        }
+      ]
+    },
+    {
+      "name": "withField",
+      "description": [
+        "Adds a field to a table schema, mutating it in the process.",
+        "",
+        "Fields are serialised and deserialised in the order they are added."
+      ],
+      "parameters": [
+        {
+          "name": "schema",
+          "type": "Schema",
+          "description": "The table schema to add the field to."
+        },
+        {
+          "name": "fieldName",
+          "type": "string",
+          "description": "The name of the field."
+        },
+        {
+          "name": "fieldSchema",
+          "type": "Schema",
+          "description": "The schema for the field value."
+        }
+      ],
+      "returns": [
+        {
+          "name": "schema",
+          "type": "Schema",
+          "description": "The table schema that was passed in (for method chaining)."
+        }
+      ]
+    }
+  ],
+  "classes": [
+    {
+      "name": "IntSchemaConfig",
+      "description": [
+        "Schema configuration for serialising integers up to 32 bits in size.",
+        "",
+        "Integers are encoded as a range to handle both signed and unsigned integers efficiently.",
+        "The `min` and `max` properties define the inclusive range of values that can be represented.",
+        "",
+        "The default range can represent any 32-bit signed integer."
+      ],
+      "properties": [
+        {
+          "name": "min",
+          "type": "number",
+          "optional": true,
+          "defaultValue": -2147483648,
+          "description": "The minimum integer value (inclusive) that can be represented."
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "optional": true,
+          "defaultValue": 2147483647,
+          "description": "The maximum integer value (inclusive) that can be represented."
+        }
+      ]
+    },
+    {
+      "name": "StringSchemaConfig",
+      "description": [
+        "Schema configuration for serialising strings.",
+        "",
+        "Strings are encoded as a length prefix followed by individual character bytes (0-255)."
+      ],
+      "properties": [
+        {
+          "name": "maxLength",
+          "type": "number",
+          "optional": true,
+          "defaultValue": 65535,
+          "description": "The maximum length of the string."
+        }
+      ]
+    },
+    {
+      "name": "QuantizedFloatSchemaConfig",
+      "description": [
+        "Schema configuration for serialising quantized floating-point numbers.",
+        "",
+        "Quantized floats provide a space-efficient way to represent floating-point values",
+        "by mapping a continuous range `[min, max]` to a discrete number of integer steps.",
+        "",
+        "The precision and size is determined by the number of steps: more steps = higher precision but more bits required."
+      ],
+      "properties": [
+        {
+          "name": "min",
+          "type": "number",
+          "description": "The minimum value (inclusive) that can be represented."
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "description": "The maximum value (inclusive) that can be represented."
+        },
+        {
+          "name": "steps",
+          "type": "number",
+          "optional": true,
+          "defaultValue": 65535,
+          "description": "The number of discrete steps to divide the range into."
+        }
+      ]
+    },
+    {
+      "name": "Vector3SchemaConfig",
+      "description": [
+        "Schema configuration for serialising Vector3 values.",
+        "",
+        "By default, each component (x, y, z) is serialised as a 32-bit float.",
+        "You can customize this by providing a different `componentSchema` (e.g., quantized floats for reduced bandwidth)."
+      ],
+      "properties": [
+        {
+          "name": "componentSchema",
+          "type": "Schema",
+          "optional": true,
+          "defaultValue": "Serialiser.float()",
+          "description": "The schema to use for each component (x, y, z)."
+        }
+      ]
+    },
+    {
+      "name": "ArraySchemaConfig",
+      "description": [
+        "Schema configuration for serialising arrays.",
+        "",
+        "Arrays can be either variable-length or fixed-length:",
+        "- Variable-length arrays (defined by `maxLength`) store the actual length in the buffer, allowing arrays of different sizes up to `maxLength`.",
+        "- Fixed-length arrays (defined by `fixedLength`) do not store length in the buffer, but require the array to always have `fixedLength` elements.",
+        "",
+        "You must provide either `maxLength` or `fixedLength`, but not both."
+      ],
+      "properties": [
+        {
+          "name": "maxLength",
+          "type": "number",
+          "optional": true,
+          "description": "The maximum number of elements in a variable-length array. Cannot be used with `fixedLength`."
+        },
+        {
+          "name": "fixedLength",
+          "type": "number",
+          "optional": true,
+          "description": "The exact number of elements in a fixed-length array. Cannot be used with `maxLength`."
+        },
+        {
+          "name": "elementSchema",
+          "type": "Schema",
+          "description": "The schema for each element in the array."
+        }
+      ]
+    }
+  ]
+}

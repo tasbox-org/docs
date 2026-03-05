@@ -1,5 +1,6 @@
 {
   "name": "Filesystem",
+  "realms": ["menu", "client", "server"],
   "description": "API for filesystem-related functions.",
   "functions": [
     {
@@ -15,6 +16,12 @@
           "name": "base",
           "description": "The base path to use.",
           "type": "string",
+          "optional": true
+        },
+        {
+          "name": "level",
+          "description": "The stack level to get the script path of, if `base` is `nil`.",
+          "type": "number",
           "optional": true
         }
       ],

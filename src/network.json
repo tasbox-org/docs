@@ -1,0 +1,188 @@
+{
+  "name": "Network",
+  "realms": ["client", "server"],
+  "description": [
+    "API for network-related functions.",
+    "",
+    "All network messages are identified by a 64-bit hash of their name. This hash is automatically computed when using `Network.send` and `Network.receive`, so you don't need to worry about it unless you're handling the low-level `Network.message` event directly.",
+    "",
+    "Every network message is limited to a maximum payload size of 1 megabyte (1,048,576 bytes).",
+    "All data is sent on the reliable channel."
+  ],
+  "functions": [
+    {
+      "name": "send",
+      "realms": ["server"],
+      "description": "Sends a buffer of data to a specified player as a specific network message.",
+      "parameters": [
+        {
+          "name": "payload",
+          "description": "The buffer of data to send.",
+          "type": "buffer"
+        },
+        {
+          "name": "messageName",
+          "description": "The name of the network message to send.",
+          "type": "string"
+        },
+        {
+          "name": "player",
+          "description": "The player to send the data to.",
+          "type": "Player"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "send",
+      "realms": ["client"],
+      "description": "Sends a buffer of data to the server as a specific network message.",
+      "parameters": [
+        {
+          "name": "payload",
+          "description": "The buffer of data to send.",
+          "type": "buffer"
+        },
+        {
+          "name": "messageName",
+          "description": "The name of the network message to send.",
+          "type": "string"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "receive",
+      "realms": ["server"],
+      "description": "Registers a callback to be called when a specific network message is received from a player.",
+      "parameters": [
+        {
+          "name": "messageName",
+          "description": "The name of the network message to listen for.",
+          "type": "string"
+        },
+        {
+          "name": "callback",
+          "description": "The callback to be called when the message is received.",
+          "type": {
+            "type": "function",
+            "parameters": [
+              {
+                "name": "player",
+                "type": "Player",
+                "description": "The player who sent the message."
+              },
+              {
+                "name": "payload",
+                "type": "buffer",
+                "description": "The buffer of data received."
+              }
+            ],
+            "returns": []
+          }
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "receive",
+      "realms": ["client"],
+      "description": "Registers a callback to be called when a specific network message is received from the server.",
+      "parameters": [
+        {
+          "name": "messageName",
+          "description": "The name of the network message to listen for.",
+          "type": "string"
+        },
+        {
+          "name": "callback",
+          "description": "The callback to be called when the message is received.",
+          "type": {
+            "type": "function",
+            "parameters": [
+              {
+                "name": "payload",
+                "type": "buffer",
+                "description": "The buffer of data received."
+              }
+            ],
+            "returns": []
+          }
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "getMessageNameHash",
+      "realms": ["client", "server"],
+      "description": "Gets the hash of a network message name.",
+      "parameters": [
+        {
+          "name": "messageName",
+          "description": "The name of the network message.",
+          "type": "string"
+        }
+      ],
+      "returns": [
+        {
+          "name": "hash",
+          "description": "The 64-bit hash of the network message name as a string.",
+          "type": "string"
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "message",
+      "realms": ["client"],
+      "description": [
+        "Fired when a network message is received from the server.",
+        "",
+        "- Network messages are identified by a hash, not by name.",
+        "- Use `Network.receive` to register callbacks for specific messages."
+      ],
+      "parameters": [
+        {
+          "name": "messageNameHash",
+          "description": "The 64-bit hash of the received network message as a string.",
+          "type": "string"
+        },
+        {
+          "name": "payload",
+          "description": "The buffer of data received.",
+          "type": "buffer"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "message",
+      "realms": ["server"],
+      "description": [
+        "Fired when a network message is received from a player.",
+        "",
+        "- Network messages are identified by a hash, not by name.",
+        "- Use `Network.receive` to register callbacks for specific messages."
+      ],
+      "parameters": [
+        {
+          "name": "player",
+          "description": "The player who sent the message.",
+          "type": "Player"
+        },
+        {
+          "name": "messageNameHash",
+          "description": "The 64-bit hash of the received network message as a string.",
+          "type": "string"
+        },
+        {
+          "name": "payload",
+          "description": "The buffer of data received.",
+          "type": "buffer"
+        }
+      ],
+      "returns": []
+    }
+  ]
+}

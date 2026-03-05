@@ -1,5 +1,6 @@
 {
   "name": "UI",
+  "realms": ["menu", "client"],
   "description": [
     "Retained mode and DOM-style API to render interactive user-interfaces, with a Solid.js-inspired UI framework built on top.",
     "",
@@ -9,7 +10,7 @@
   "functions": [
     {
       "name": "createElement",
-      "description": "Creates a new containing element element.",
+      "description": "Creates a new containing element.",
       "parameters": [],
       "returns": [
         {
@@ -36,6 +37,34 @@
       ]
     },
     {
+      "name": "createRichTextElement",
+      "description": "Creates a new rich text element designed for user input.",
+      "parameters": [],
+      "returns": [
+        {
+          "name": "element",
+          "type": "RichTextElement"
+        }
+      ]
+    },
+    {
+      "name": "getId",
+      "description": "Gets the unique ID for this element (can be used for equality).",
+      "parameters": [
+        {
+          "name": "element",
+          "type": ["Element", "TextElement", "RichTextElement"]
+        }
+      ],
+      "returns": [
+        {
+          "name": "id",
+          "type": "number",
+          "description": "Unique ID for this element."
+        }
+      ]
+    },
+    {
       "name": "isTextElement",
       "description": "Returns whether the given parameter is a text UI element.",
       "parameters": [
@@ -54,12 +83,30 @@
       ]
     },
     {
+      "name": "isRichTextElement",
+      "description": "Returns whether the given parameter is a rich text UI element.",
+      "parameters": [
+        {
+          "name": "value",
+          "description": "The value to check.",
+          "type": "any"
+        }
+      ],
+      "returns": [
+        {
+          "name": "isRichTextElement",
+          "description": "Whether the value is a rich text element.",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
       "name": "removeElement",
       "description": "Removes the element from its parent. No-op if the element has no parent.",
       "parameters": [
         {
           "name": "child",
-          "type": ["Element", "TextElement"]
+          "type": ["Element", "TextElement", "RichTextElement"]
         }
       ],
       "returns": []
@@ -79,7 +126,7 @@
         {
           "name": "child",
           "description": "Element to be appended.",
-          "type": ["Element", "TextElement"]
+          "type": ["Element", "TextElement", "RichTextElement"]
         }
       ],
       "returns": []
@@ -102,7 +149,7 @@
           "name": "children",
           "type": {
             "type": "array",
-            "items": ["Element", "TextElement"]
+            "items": ["Element", "TextElement", "RichTextElement"]
           }
         }
       ]
@@ -113,7 +160,7 @@
       "parameters": [
         {
           "name": "element",
-          "type": "Element"
+          "type": ["Element", "RichTextElement"]
         }
       ],
       "returns": [
@@ -129,7 +176,7 @@
       "parameters": [
         {
           "name": "element",
-          "type": "Element"
+          "type": ["Element", "RichTextElement"]
         },
         {
           "name": "name",
@@ -144,7 +191,7 @@
       "parameters": [
         {
           "name": "element",
-          "type": "TextElement"
+          "type": ["TextElement", "RichTextElement"]
         }
       ],
       "returns": [
@@ -170,6 +217,151 @@
       "returns": []
     },
     {
+      "section": "Rich Text",
+      "name": "getNumLines",
+      "description": "Gets the number of lines in the rich text element (not including visual wrapping).",
+      "parameters": [
+        {
+          "name": "element",
+          "type": "RichTextElement"
+        }
+      ],
+      "returns": [
+        {
+          "name": "numLines",
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "section": "Rich Text",
+      "name": "getNumCharacters",
+      "description": "Gets the number of characters in the rich text element's line (not including visual wrapping).",
+      "parameters": [
+        {
+          "name": "element",
+          "type": "RichTextElement"
+        },
+        {
+          "name": "line",
+          "type": "number",
+          "description": "Line to get the length of. Throws if out of range."
+        }
+      ],
+      "returns": [
+        {
+          "name": "numCharacters",
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "section": "Rich Text",
+      "name": "setTokens",
+      "description": [
+        "Overwrites a selection in the rich text element with the given tokens, splitting and merging tokens as needed.",
+        "",
+        "Shifts the caret vertically if the number of lines to write is different to the number selected and the caret is after the selection.",
+        "Does not shift the caret within or before the selection. i.e. you must manually move the caret when applying user input."
+      ],
+      "parameters": [
+        {
+          "name": "element",
+          "type": "RichTextElement"
+        },
+        {
+          "name": "tokens",
+          "type": {
+            "type": "array",
+            "items": "RichTextToken"
+          }
+        },
+        {
+          "name": "start",
+          "type": {
+            "type": "array",
+            "items": "number"
+          },
+          "description": "[line, character] of the selection's start (0-indexed)."
+        },
+        {
+          "name": "end",
+          "type": {
+            "type": "array",
+            "items": "number"
+          },
+          "description": "[line, character] of the selection's end (0-indexed)."
+        }
+      ]
+    },
+    {
+      "section": "Rich Text",
+      "name": "setCaret",
+      "description": "Sets the position of the caret within the rich text element, if the element is focused.",
+      "parameters": [
+        {
+          "name": "element",
+          "type": "RichTextElement"
+        },
+        {
+          "name": "newCaret",
+          "type": {
+            "type": "array",
+            "items": "number"
+          },
+          "description": "[line, character] of the new caret position."
+        }
+      ],
+      "returns": []
+    },
+    {
+      "section": "Rich Text",
+      "name": "getCaret",
+      "description": "Gets the position of the caret within the rich text element, or `nil` if the element isn't focused.",
+      "parameters": [
+        {
+          "name": "element",
+          "type": "RichTextElement"
+        }
+      ],
+      "returns": [
+        {
+          "name": "caret",
+          "type": {
+            "type": "array",
+            "items": "number"
+          },
+          "optional": true,
+          "description": "[line, character] of the caret position, if focused."
+        }
+      ]
+    },
+    {
+      "section": "Rich Text",
+      "name": "moveCaret",
+      "description": [
+        "Moves the rich text element's caret the given number of lines and characters, if the element is focused.",
+        "",
+        "Vertical caret movement maintains the horizontal pixel position of the caret as close as possible,",
+        "and preserves it across lines of varying lengths until the next horizontal movement."
+      ],
+      "parameters": [
+        {
+          "name": "element",
+          "type": "RichTextElement"
+        },
+        {
+          "name": "delta",
+          "type": {
+            "type": "array",
+            "items": "number"
+          },
+          "description": "[line, character] deltas to move the caret in."
+        }
+      ],
+      "returns": []
+    },
+    {
       "name": "setStyle",
       "description": [
         "Sets a style on the element when in the specified state.",
@@ -180,7 +372,7 @@
       "parameters": [
         {
           "name": "element",
-          "type": "Element"
+          "type": ["Element", "RichTextElement"]
         },
         {
           "name": "style",
@@ -237,18 +429,21 @@
       "returns": []
     },
     {
+      "section": "Debugging",
       "name": "enableDebugger",
       "description": "Enables the Clay debugger.",
       "parameters": [],
       "returns": []
     },
     {
+      "section": "Debugging",
       "name": "disableDebugger",
       "description": "Disables the Clay debugger.",
       "parameters": [],
       "returns": []
     },
     {
+      "section": "Debugging",
       "name": "isDebuggerEnabled",
       "description": "Returns whether the Clay debugger is enabled.",
       "parameters": [],
@@ -258,51 +453,6 @@
           "type": "boolean"
         }
       ]
-    },
-    {
-      "name": "addEventListener",
-      "description": "Listen to events raised on the element to support user interaction.",
-      "parameters": [
-        {
-          "name": "element",
-          "type": "Element"
-        },
-        {
-          "name": "eventName",
-          "type": ["'mouseDown'", "'mouseUp'"]
-        },
-        {
-          "name": "callback",
-          "type": "function"
-        }
-      ],
-      "returns": [
-        {
-          "name": "callback",
-          "type": "function",
-          "description": "Callback that was passed in."
-        }
-      ]
-    },
-    {
-      "name": "removeEventListener",
-      "description": "Remove an event listener from the element.",
-      "parameters": [
-        {
-          "name": "element",
-          "type": "Element"
-        },
-        {
-          "name": "eventName",
-          "type": ["'mouseDown'", "'mouseUp'"]
-        },
-        {
-          "name": "callback",
-          "type": "function",
-          "description": "Callback that was passed to `addEventListener`."
-        }
-      ],
-      "returns": []
     },
     {
       "name": "createComponent",
@@ -509,7 +659,7 @@
       "parameters": [
         {
           "name": "element",
-          "type": ["Element", "TextElement"]
+          "type": ["Element", "TextElement", "RichTextElement"]
         },
         {
           "name": "indent",
@@ -522,6 +672,165 @@
         {
           "name": "elementMarkup",
           "type": "string"
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "pressed",
+      "description": "Fires when the mouse or controller button bound to click is pressed on an element.",
+      "parameters": [
+        {
+          "name": "element",
+          "type": "Element"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "released",
+      "description": "Fires when the mouse or controller button bound to click is released on an element.",
+      "parameters": [
+        {
+          "name": "element",
+          "type": "Element"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "textEntry",
+      "description": "Fires when the user enters text into a rich text element.",
+      "parameters": [
+        {
+          "name": "element",
+          "type": "RichTextElement"
+        },
+        {
+          "name": "text",
+          "type": "string"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "keyPress",
+      "description": [
+        "Fires when the user presses a key in a rich text element.",
+        "",
+        "Note this won't necessarily match the actual text that would be entered by the key press (e.g. when using a non-Latin alphabet).",
+        "You should use the `'textEntry'` event for inserting typed characters into the element, and this event for special keys like backspace."
+      ],
+      "parameters": [
+        {
+          "name": "element",
+          "type": "RichTextElement"
+        },
+        {
+          "name": "keyCode",
+          "type": "Keyboard.KeyCode"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "keyRepeat",
+      "description": [
+        "Fires when the Operating System repeats a held key in a rich text element.",
+        "",
+        "Note this won't necessarily match the actual text that would be entered by the key press (e.g. when using a non-Latin alphabet).",
+        "You should use the `'textEntry'` event for inserting typed characters into the element, and this event for special keys like backspace."
+      ],
+      "parameters": [
+        {
+          "name": "element",
+          "type": "RichTextElement"
+        },
+        {
+          "name": "keyCode",
+          "type": "Keyboard.KeyCode"
+        }
+      ],
+      "returns": []
+    },
+    {
+      "name": "keyRelease",
+      "description": [
+        "Fires when the user releases a key in a rich text element.",
+        "",
+        "Note this won't necessarily match the actual text that would be entered by the key press (e.g. when using a non-Latin alphabet).",
+        "You should use the `'textEntry'` event for inserting typed characters into the element, and this event for special keys like backspace."
+      ],
+      "parameters": [
+        {
+          "name": "element",
+          "type": "RichTextElement"
+        },
+        {
+          "name": "keyCode",
+          "type": "Keyboard.KeyCode"
+        }
+      ],
+      "returns": []
+    }
+  ],
+  "classes": [
+    {
+      "name": "RichTextToken",
+      "description": "An independently stylable chunk of text in a rich text element.",
+      "properties": [
+        {
+          "name": "content",
+          "type": "string"
+        },
+        {
+          "name": "style",
+          "type": "RichTextTokenStyles"
+        }
+      ]
+    },
+    {
+      "name": "RichTextTokenStyles",
+      "description": [
+        "Styling properties for rich text tokens.",
+        "All properties are optional and will default to the values defined on the element."
+      ],
+      "properties": [
+        {
+          "name": "alignmentY",
+          "type": "UI.ChildAlignment",
+          "optional": true
+        },
+        {
+          "name": "textColour",
+          "type": "Colour",
+          "optional": true
+        },
+        {
+          "name": "backgroundColour",
+          "type": "Colour",
+          "optional": true
+        },
+        {
+          "name": "fontSize",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "letterSpacing",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "lineHeight",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "textWrapping",
+          "type": "UI.TextWrapping",
+          "optional": true
         }
       ]
     }
