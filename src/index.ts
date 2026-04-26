@@ -78,9 +78,10 @@ export const allLibraries: Library[] = [
 ];
 
 export type * from "./interfaces/class";
+export type * from "./interfaces/constant";
+export type * from "./interfaces/enum";
 export type * from "./interfaces/function";
 export type * from "./interfaces/library";
 export type * from "./interfaces/property";
-export type * from "./interfaces/enum";
-export type * from "./interfaces/constant";
 export type * from "./interfaces/realm";
+export type * from "./interfaces/type";
