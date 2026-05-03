@@ -83,7 +83,7 @@
       "returns": [
         {
           "name": "contents",
-          "descriptions": "Contents of the directory. Will be empty when the path doesn't exist.",
+          "description": "Contents of the directory. Will be empty when the path doesn't exist.",
           "type": "DirectoryContents"
         }
       ]

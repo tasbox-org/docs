@@ -293,7 +293,8 @@
           },
           "description": "[line, character] of the selection's end (0-indexed)."
         }
-      ]
+      ],
+      "returns": []
     },
     {
       "section": "Rich Text",
@@ -492,29 +493,31 @@
             "returns": [
               {
                 "name": "elementProducer",
-                "type": "function",
-                "parameters": [],
-                "returns": [
-                  {
-                    "name": "elements",
-                    "type": {
-                      "type": "array",
-                      "items": {
-                        "type": "function",
-                        "parameters": [],
-                        "returns": [
-                          {
-                            "name": "elements",
-                            "type": {
-                              "type": "array",
-                              "items": ["Element", "TextElement"]
+                "type": {
+                  "type": "function",
+                  "parameters": [],
+                  "returns": [
+                    {
+                      "name": "elements",
+                      "type": {
+                        "type": "array",
+                        "items": {
+                          "type": "function",
+                          "parameters": [],
+                          "returns": [
+                            {
+                              "name": "elements",
+                              "type": {
+                                "type": "array",
+                                "items": ["Element", "TextElement"]
+                              }
                             }
-                          }
-                        ]
+                          ]
+                        }
                       }
                     }
-                  }
-                ]
+                  ]
+                }
               }
             ]
           }
@@ -540,19 +543,21 @@
                   "returns": [
                     {
                       "name": "elements",
-                      "type": "array",
-                      "items": {
-                        "type": "function",
-                        "parameters": [],
-                        "returns": [
-                          {
-                            "name": "elements",
-                            "type": {
-                              "type": "array",
-                              "items": ["Element", "TextElement"]
+                      "type": {
+                        "type": "array",
+                        "items": {
+                          "type": "function",
+                          "parameters": [],
+                          "returns": [
+                            {
+                              "name": "elements",
+                              "type": {
+                                "type": "array",
+                                "items": ["Element", "TextElement"]
+                              }
                             }
-                          }
-                        ]
+                          ]
+                        }
                       }
                     }
                   ]

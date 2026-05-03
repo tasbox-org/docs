@@ -824,7 +824,8 @@
           "optional": true,
           "defaultValue": "ForceMode.Force"
         }
-      ]
+      ],
+      "returns": []
     },
     {
       "name": "clearForce",
@@ -1800,7 +1801,7 @@
   "classes": [
     {
       "name": "ControllerCreateOptions",
-      "descriptions": [
+      "description": [
         "Options passed to `Physics.createController`.",
         "",
         "Most properties have sensible defaults which will be used when no value is given."
