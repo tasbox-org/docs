@@ -1,4 +1,5 @@
 {
+  "$schema": "../schema.json",
   "name": "Player",
   "realms": ["client", "server"],
   "description": "API for interacting with players.",

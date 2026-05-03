@@ -1,4 +1,5 @@
 {
+  "$schema": "../schema.json",
   "name": "Globals",
   "description": "API for global functions.",
   "functions": [

@@ -1,4 +1,5 @@
 {
+  "$schema": "../schema.json",
   "name": "Engine",
   "realms": ["menu", "client", "server"],
   "description": "API for engine-related functions.",

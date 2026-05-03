@@ -1,4 +1,5 @@
 {
+  "$schema": "../schema.json",
   "name": "MoonJuice",
   "description": [
     "Library for TASBox's custom scripting language that transpiles to Lua.",
