@@ -1,0 +1,394 @@
+{
+  "$ref": "#/definitions/Library",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "ArrayType": {
+      "additionalProperties": false,
+      "properties": {
+        "items": {
+          "$ref": "#/definitions/Type"
+        },
+        "type": {
+          "const": "array",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "items"
+      ],
+      "type": "object"
+    },
+    "Class": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "properties": {
+          "items": {
+            "$ref": "#/definitions/ClassProperty"
+          },
+          "type": "array"
+        },
+        "realms": {
+          "items": {
+            "$ref": "#/definitions/Realm"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "properties"
+      ],
+      "type": "object"
+    },
+    "ClassProperty": {
+      "additionalProperties": false,
+      "properties": {
+        "defaultValue": {
+          "type": [
+            "string",
+            "number",
+            "boolean"
+          ]
+        },
+        "description": {
+          "type": "string"
+        },
+        "name": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "optional": {
+          "type": "boolean"
+        },
+        "type": {
+          "$ref": "#/definitions/Type"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "type": "object"
+    },
+    "Constant": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "name": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "optional": {
+          "type": "boolean"
+        },
+        "realms": {
+          "items": {
+            "$ref": "#/definitions/Realm"
+          },
+          "type": "array"
+        },
+        "type": {
+          "$ref": "#/definitions/Type"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "type": "object"
+    },
+    "Enum": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "realms": {
+          "items": {
+            "$ref": "#/definitions/Realm"
+          },
+          "type": "array"
+        },
+        "values": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "values"
+      ],
+      "type": "object"
+    },
+    "FunctionParameter": {
+      "additionalProperties": false,
+      "properties": {
+        "defaultValue": {
+          "type": [
+            "string",
+            "number",
+            "boolean"
+          ]
+        },
+        "description": {
+          "type": "string"
+        },
+        "name": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "optional": {
+          "type": "boolean"
+        },
+        "type": {
+          "$ref": "#/definitions/Type"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "type": "object"
+    },
+    "FunctionProperty": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "parameters": {
+          "items": {
+            "$ref": "#/definitions/FunctionParameter"
+          },
+          "type": "array"
+        },
+        "realms": {
+          "items": {
+            "$ref": "#/definitions/Realm"
+          },
+          "type": "array"
+        },
+        "returns": {
+          "items": {
+            "$ref": "#/definitions/Property"
+          },
+          "type": "array"
+        },
+        "section": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "parameters",
+        "returns"
+      ],
+      "type": "object"
+    },
+    "FunctionType": {
+      "additionalProperties": false,
+      "properties": {
+        "parameters": {
+          "items": {
+            "$ref": "#/definitions/Property"
+          },
+          "type": "array"
+        },
+        "returns": {
+          "items": {
+            "$ref": "#/definitions/Property"
+          },
+          "type": "array"
+        },
+        "type": {
+          "const": "function",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "parameters",
+        "returns"
+      ],
+      "type": "object"
+    },
+    "Library": {
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "type": "string"
+        },
+        "classes": {
+          "items": {
+            "$ref": "#/definitions/Class"
+          },
+          "type": "array"
+        },
+        "constants": {
+          "items": {
+            "$ref": "#/definitions/Constant"
+          },
+          "type": "array"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "enums": {
+          "items": {
+            "$ref": "#/definitions/Enum"
+          },
+          "type": "array"
+        },
+        "events": {
+          "items": {
+            "$ref": "#/definitions/FunctionProperty"
+          },
+          "type": "array"
+        },
+        "functions": {
+          "items": {
+            "$ref": "#/definitions/FunctionProperty"
+          },
+          "type": "array"
+        },
+        "name": {
+          "type": "string"
+        },
+        "realms": {
+          "description": "Default realms for all constants, functions, enums, classes and events in this library. If not defined, realm is unknown (i.e. documentation needs updating).",
+          "items": {
+            "$ref": "#/definitions/Realm"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "$schema",
+        "name"
+      ],
+      "type": "object"
+    },
+    "PrimitiveType": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/ArrayType"
+        },
+        {
+          "$ref": "#/definitions/FunctionType"
+        }
+      ]
+    },
+    "Property": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "name": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "optional": {
+          "type": "boolean"
+        },
+        "type": {
+          "$ref": "#/definitions/Type"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "type": "object"
+    },
+    "Realm": {
+      "enum": [
+        "menu",
+        "client",
+        "server"
+      ],
+      "type": "string"
+    },
+    "Type": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/PrimitiveType"
+        },
+        {
+          "items": {
+            "$ref": "#/definitions/PrimitiveType"
+          },
+          "type": "array"
+        }
+      ]
+    }
+  }
+}

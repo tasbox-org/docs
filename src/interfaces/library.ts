@@ -5,6 +5,8 @@ import { Realm } from "./realm";
 import { Constant } from "./constant";
 
 export interface Library {
+  $schema: string;
+
   name: string;
 
   /**
