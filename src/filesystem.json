@@ -1,4 +1,5 @@
 {
+  "$schema": "../schema.json",
   "name": "Filesystem",
   "realms": ["menu", "client", "server"],
   "description": "API for filesystem-related functions.",
@@ -82,7 +83,7 @@
       "returns": [
         {
           "name": "contents",
-          "descriptions": "Contents of the directory. Will be empty when the path doesn't exist.",
+          "description": "Contents of the directory. Will be empty when the path doesn't exist.",
           "type": "DirectoryContents"
         }
       ]

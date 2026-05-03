@@ -1,4 +1,5 @@
 {
+  "$schema": "../schema.json",
   "name": "Colour",
   "description": "API for creating and manipulating colours.",
   "functions": [

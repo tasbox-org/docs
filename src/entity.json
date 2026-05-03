@@ -1,4 +1,5 @@
 {
+  "$schema": "../schema.json",
   "name": "Entity",
   "realms": ["client", "server"],
   "description": "API for creating and manipulating entities as well as components.",

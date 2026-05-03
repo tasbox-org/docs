@@ -23,8 +23,7 @@ import _Ui from "./ui.json" with { type: "json" };
 import _Network from "./network.json" with { type: "json" };
 import _Serialiser from "./serialiser.json" with { type: "json" };
 
-import { Library } from "./interfaces/library";
-import { FunctionProperty } from "./interfaces/function";
+import type { Library, FunctionProperty } from "./interfaces";
 
 export const asset: Library = _Asset as Library;
 export const camera: Library = _Camera;
@@ -77,11 +76,4 @@ export const allLibraries: Library[] = [
   serialiser,
 ];
 
-export type * from "./interfaces/class";
-export type * from "./interfaces/constant";
-export type * from "./interfaces/enum";
-export type * from "./interfaces/function";
-export type * from "./interfaces/library";
-export type * from "./interfaces/property";
-export type * from "./interfaces/realm";
-export type * from "./interfaces/type";
+export type * from "./interfaces";

@@ -1,4 +1,5 @@
 {
+  "$schema": "../schema.json",
   "name": "Engine",
   "realms": ["menu", "client", "server"],
   "description": "API for engine-related functions.",
@@ -38,21 +39,23 @@
               },
               {
                 "name": "require",
-                "type": "function",
-                "parameters": [
-                  {
-                    "name": "path",
-                    "type": "string",
-                    "description": "The path to the module."
-                  }
-                ],
-                "returns": [
-                  {
-                    "name": "module",
-                    "type": "any",
-                    "description": "The return value of the executed file."
-                  }
-                ]
+                "type": {
+                  "type": "function",
+                  "parameters": [
+                    {
+                      "name": "path",
+                      "type": "string",
+                      "description": "The path to the module."
+                    }
+                  ],
+                  "returns": [
+                    {
+                      "name": "module",
+                      "type": "any",
+                      "description": "The return value of the executed file."
+                    }
+                  ]
+                }
               }
             ],
             "returns": [

@@ -1,4 +1,5 @@
 {
+  "$schema": "../schema.json",
   "name": "Asset",
   "description": "Library for reading assets of all types from the filesystem.",
   "functions": [

@@ -1,4 +1,5 @@
 {
+  "$schema": "../schema.json",
   "name": "Luau",
   "description": "API for creating and running isolated Luau environments.",
   "functions": [

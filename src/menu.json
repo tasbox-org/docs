@@ -1,4 +1,5 @@
 {
+  "$schema": "../schema.json",
   "name": "Menu",
   "description": [
     "Library allowing game developers to implement custom main menus for their games.",
