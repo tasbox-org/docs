@@ -131,6 +131,30 @@
       ]
     },
     {
+      "name": "getName",
+      "description": [
+        "Returns the display name for this player",
+        "",
+        "**Do not** use this as a unique identifier for a player.",
+        "A player may change their username at any time, and two or more players could have the same display name."
+      ],
+      "parameters": [
+        {
+          "name": "player",
+          "description": "Player to get the name of.",
+          "type": "Player"
+        }
+      ],
+      "returns": [
+        {
+          "name": "name",
+          "description": "The player's display name, or `nil` if they haven't started/finished connecting.",
+          "type": "string",
+          "optional": true
+        }
+      ]
+    },
+    {
       "name": "getLocalPlayer",
       "realms": ["client"],
       "description": "Gets the local player.",

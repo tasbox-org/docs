@@ -1,6 +1,7 @@
 {
   "$schema": "../schema.json",
   "name": "MoonJuice",
+  "realms": ["menu", "client", "server"],
   "description": [
     "Library for TASBox's custom scripting language that transpiles to Lua.",
     "",
@@ -9,66 +10,30 @@
   "functions": [
     {
       "name": "toLuau",
-      "description": "Transpiles the provided MoonJuice source code to Luau, returning any syntax errors.",
+      "description": "Transpiles the provided MoonJuice source code to Luau, returning the first syntax error if any.",
       "parameters": [
         {
           "name": "source",
           "description": "MoonJuice source code.",
+          "type": "string"
+        },
+        {
+          "name": "path",
+          "description": "Path to the source file for formatting errors.",
           "type": "string"
         }
       ],
       "returns": [
         {
           "name": "transpiledSource",
-          "description": "Transpiled Luau source code. Only valid if there are no errors.",
+          "description": "Transpiled Luau source code. Empty string if there were errors.",
           "type": "string"
         },
         {
-          "name": "syntaxErrors",
-          "description": "List of syntax errors in the provided source.",
-          "type": {
-            "type": "array",
-            "items": "MoonJuiceError"
-          }
-        }
-      ]
-    }
-  ],
-  "classes": [
-    {
-      "name": "MoonJuiceError",
-      "description": "Syntax error in MoonJuice source code.",
-      "properties": [
-        {
-          "name": "message",
-          "description": "Error message.",
-          "type": "string"
-        },
-        {
-          "name": "start",
-          "description": "Start of the error in the source code.",
-          "type": "MoonJuicePosition"
-        },
-        {
-          "name": "end",
-          "description": "End of the error in the source code.",
-          "type": "MoonJuicePosition"
-        }
-      ]
-    },
-    {
-      "name": "MoonJuicePosition",
-      "description": "Describes a location in MoonJuice source code by its line and column numbers.",
-      "properties": [
-        {
-          "name": "line",
-          "description": "Line in the source code.",
-          "type": "number"
-        },
-        {
-          "name": "column",
-          "description": "Column in the source code.",
-          "type": "number"
+          "name": "syntaxError",
+          "description": "The first syntax error hit while transpiling, or `nil` if the source is valid.",
+          "type": "string",
+          "optional": true
         }
       ]
     }
