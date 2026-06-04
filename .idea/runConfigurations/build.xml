@@ -5,7 +5,7 @@
     <scripts>
       <script value="build" />
     </scripts>
-    <node-interpreter value="$USER_HOME$/.local/share/nvm/v20.19.2/bin/node" />
+    <node-interpreter value="project" />
     <envs />
     <EXTENSION ID="com.intellij.javascript.debugger.execution.StartBrowserRunConfigurationExtension">
       <browser name="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" with-js-debugger="true" />
